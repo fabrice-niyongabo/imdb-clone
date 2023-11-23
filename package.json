@@ -10,6 +10,7 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
   },
   "dependencies": {
+    "@mdi/font": "^7.0.96",
     "axios": "^1.6.2",
     "pinia": "^2.1.7",
     "vue": "^3.3.4",
