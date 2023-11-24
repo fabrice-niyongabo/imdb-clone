@@ -33,87 +33,9 @@
             </g>
           </svg>
         </router-link>
-        <div>
-          <v-btn
-            elevation="0"
-            color="#121212"
-            class="hover:cursor-pointer hover:bg-[#252525]"
-          >
-            <v-icon icon="mdi-menu" size="large" />
-            <span class="capitalize">Menu</span>
-          </v-btn>
-        </div>
-        <div class="flex items-center justify-between flex-1">
-          <div class="h-[30px] bg-white border-r rounded-l-md">
-            <v-btn
-              height="30"
-              rounded="0"
-              variant="text"
-              class="rounded-l-md !capitalize"
-            >
-              {{ selectedFilterCategory.label }}
-              <v-icon v-if="showCategories" icon="mdi-menu-up" size="x-large" />
-              <v-icon
-                v-if="!showCategories"
-                icon="mdi-menu-down"
-                size="x-large"
-              />
+        <Menu />
+        <Search />
 
-              <v-menu activator="parent">
-                <v-list
-                  class="mt-3 !bg-[#121212]"
-                  @vnode-before-unmount="handleMenuClick()"
-                  @vnode-before-mount="handleMenuClick()"
-                >
-                  <v-list-item
-                    v-for="(item, index) in filterCategories"
-                    :key="index"
-                    :value="item.value"
-                    class="hover:bg-[#252525]"
-                  >
-                    <v-list-item-title
-                      @click="handleChangeFilter(item)"
-                      :class="[
-                        item.value === selectedFilterCategory.value
-                          ? 'text-[#F5C518]'
-                          : 'text-gray-200',
-                        'transition-all duration-100 hover:text-white',
-                      ]"
-                    >
-                      <div class="flex items-center justify-between gap-2">
-                        <v-icon :icon="item.icon" />
-                        <span class="flex-1">{{ item.label }}</span>
-                      </div>
-                    </v-list-item-title>
-                  </v-list-item>
-                  <v-divider />
-                  <v-list-item class="hover:bg-[#252525]">
-                    <v-list-item-title
-                      class="text-gray-200 transition-all duration-100 hover:text-white"
-                    >
-                      <div class="flex items-center justify-between gap-2">
-                        <v-icon icon="mdi-magnify-expand" />
-                        <span class="flex-1">Advanced search</span>
-                        <v-icon icon="mdi-chevron-right" />
-                      </div>
-                    </v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </v-btn>
-          </div>
-          <input
-            type="text"
-            placeholder="Search IMDB"
-            class="w-full bg-white h-[30px] outline-none px-3 text-sm"
-          />
-
-          <div
-            class="flex items-center justify-center bg-white h-[30px] pr-2 rounded-r-md hover:cursor-pointer"
-          >
-            <v-icon icon="mdi-magnify" />
-          </div>
-        </div>
         <div class="px-2">
           <svg
             class="ipc-logo navbar__imdbpro-menu-toggle__name"
@@ -162,141 +84,19 @@
           class="hover:cursor-pointer hover:bg-[#252525] !capitalize"
           >sign in</v-btn
         >
-        <v-btn
-          rounded="0"
-          variant="text"
-          color="white"
-          class="rounded-l-md !capitalize !p-0"
-        >
-          EN
-          <v-icon v-if="showLanguages" icon="mdi-menu-up" size="x-large" />
-          <v-icon v-if="!showLanguages" icon="mdi-menu-down" size="x-large" />
-
-          <v-menu activator="parent">
-            <v-list
-              class="mt-3 !bg-[#121212]"
-              @vnode-before-unmount="handleLanguesMenuClick()"
-              @vnode-before-mount="handleLanguesMenuClick()"
-            >
-              <v-list-item>
-                <v-list-item-title class="text-gray-200 !uppercase !text-xs"
-                  >fully supported
-                </v-list-item-title>
-              </v-list-item>
-              <v-divider />
-              <v-list-item class="hover:bg-[#252525] !text-sm">
-                <v-list-item-title
-                  class="text-gray-200 transition-all duration-100 hover:text-white !text-xs"
-                >
-                  <div class="flex items-center justify-between gap-2">
-                    <v-icon icon="mdi-circle-double" color="#F5C518" />
-                    <span class="flex-1">EN</span>
-                  </div>
-                </v-list-item-title>
-              </v-list-item>
-              <v-divider />
-              <v-list-item>
-                <v-list-item-title class="text-gray-200 !text-xs !uppercase"
-                  >Partially supported
-                </v-list-item-title>
-              </v-list-item>
-              <v-divider />
-              <v-list-item class="hover:bg-[#252525] !text-sm">
-                <v-list-item-title class="text-gray-200 !text-xs">
-                  <div class="flex items-center justify-between gap-2">
-                    <v-icon icon="mdi-circle-outline" />
-                    <span class="flex-1">French</span>
-                  </div>
-                </v-list-item-title>
-              </v-list-item>
-              <v-list-item class="hover:bg-[#252525] !text-sm">
-                <v-list-item-title class="text-gray-200 !text-xs">
-                  <div class="flex items-center justify-between gap-2">
-                    <v-icon icon="mdi-circle-outline" />
-                    <span class="flex-1">Kinyarwanda</span>
-                  </div>
-                </v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </v-btn>
+        <Languages />
       </nav>
     </v-container>
   </header>
 </template>
 
 <script lang="ts">
-interface IFilterCategory {
-  label: string;
-  value: string;
-  icon: string;
-}
-
-interface IReturnData {
-  filterCategories: IFilterCategory[];
-  selectedFilterCategory: IFilterCategory;
-  showCategories: boolean;
-  showLanguages: boolean;
-}
-
 import { defineComponent } from "vue";
-
-const filterCategories: IFilterCategory[] = [
-  {
-    icon: "mdi-magnify",
-    label: "All",
-    value: "",
-  },
-  {
-    icon: "mdi-filmstrip",
-    label: "Titles",
-    value: "Titles",
-  },
-  {
-    icon: "mdi-television",
-    label: "Tv Episodes",
-    value: "Tv Episodes",
-  },
-  {
-    icon: "mdi-account-multiple",
-    label: "Celebs",
-    value: "Celebs",
-  },
-  {
-    icon: "mdi-domain",
-    label: "Companies",
-    value: "Companies",
-  },
-  {
-    icon: "mdi-tag",
-    label: "Keywords",
-    value: "Keywords",
-  },
-];
+import Menu from "./Menu/Menu.vue";
+import Search from "./Search/Search.vue";
+import Languages from "./Languages/Languages.vue";
 
 export default defineComponent({
-  data(): IReturnData {
-    return {
-      filterCategories,
-      selectedFilterCategory: {
-        icon: "mdi-magnify",
-        label: "All",
-        value: "",
-      },
-      showCategories: false,
-      showLanguages: false,
-    };
-  },
-  methods: {
-    handleChangeFilter(filter: IFilterCategory) {
-      this.selectedFilterCategory = filter;
-    },
-    handleMenuClick() {
-      this.showCategories = !this.showCategories;
-    },
-    handleLanguesMenuClick() {
-      this.showLanguages = !this.showLanguages;
-    },
-  },
+  components: { Menu, Search, Languages },
 });
 </script>
