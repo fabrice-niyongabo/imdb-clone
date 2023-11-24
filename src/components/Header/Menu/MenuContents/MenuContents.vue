@@ -33,6 +33,7 @@
           </svg>
         </router-link>
         <div
+          @click="$emit('close-menu')"
           class="h-12 w-12 bg-[#F5C518] rounded-full hover:cursor-pointer flex items-center justify-center"
         >
           <v-icon icon="mdi-close" color="#121212" />
