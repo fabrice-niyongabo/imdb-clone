@@ -45,7 +45,7 @@
             <div class="flex items-start justify-between gap-4">
               <v-icon icon="mdi-filmstrip" size="large" color="#F5C518" />
               <div class="flex-1">
-                <h3 class="text-2xl">Movies</h3>
+                <h3 class="text-2xl font-medium mb-1">Movies</h3>
                 <ul class="m-0 p-0">
                   <li class="py-1">
                     <router-link to="#" class="hover:underline capitalize block"
@@ -95,7 +95,7 @@
             <div class="flex items-start justify-between gap-4">
               <v-icon icon="mdi-television" size="large" color="#F5C518" />
               <div class="flex-1">
-                <h3 class="text-2xl">TV Shows</h3>
+                <h3 class="text-2xl font-medium mb-1">TV Shows</h3>
                 <ul class="m-0 p-0">
                   <li class="py-1">
                     <router-link to="#" class="hover:underline capitalize block"
@@ -132,7 +132,7 @@
                 color="#F5C518"
               />
               <div class="flex-1">
-                <h3 class="text-2xl">Watch</h3>
+                <h3 class="text-2xl font-medium mb-1">Watch</h3>
                 <ul class="m-0 p-0">
                   <li class="py-1">
                     <router-link to="#" class="hover:underline capitalize block"
@@ -167,7 +167,7 @@
             <div class="flex items-start justify-between gap-4">
               <v-icon icon="mdi-star-circle" size="large" color="#F5C518" />
               <div class="flex-1">
-                <h3 class="text-2xl">Awards & Events</h3>
+                <h3 class="text-2xl font-medium mb-1">Awards & Events</h3>
                 <ul class="m-0 p-0">
                   <li class="py-1">
                     <router-link to="#" class="hover:underline capitalize block"
@@ -224,7 +224,7 @@
                 color="#F5C518"
               />
               <div class="flex-1">
-                <h3 class="text-2xl">Celebs</h3>
+                <h3 class="text-2xl font-medium mb-1">Celebs</h3>
                 <ul class="m-0 p-0">
                   <li class="py-1">
                     <router-link to="#" class="hover:underline capitalize block"
@@ -250,7 +250,7 @@
             <div class="flex items-start justify-between gap-4">
               <v-icon icon="mdi-earth" size="large" color="#F5C518" />
               <div class="flex-1">
-                <h3 class="text-2xl">Community</h3>
+                <h3 class="text-2xl font-medium mb-1">Community</h3>
                 <ul class="m-0 p-0">
                   <li class="py-1">
                     <router-link to="#" class="hover:underline capitalize block"

@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-[#121212]">
+  <header class="bg-[#121212] shadow-md">
     <v-container>
       <nav class="flex items-center justify-between gap-2">
         <router-link to="/">
