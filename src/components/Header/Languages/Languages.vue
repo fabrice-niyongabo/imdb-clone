@@ -12,8 +12,8 @@
     <v-menu activator="parent">
       <v-list
         class="mt-3 !bg-[#121212]"
-        @vnode-before-unmount="handleLanguesMenuClick()"
-        @vnode-before-mount="handleLanguesMenuClick()"
+        @vue:before-unmount="handleLanguesMenuClick()"
+        @vue:before-mount="handleLanguesMenuClick()"
       >
         <v-list-item>
           <v-list-item-title class="text-gray-200 !uppercase !text-xs"

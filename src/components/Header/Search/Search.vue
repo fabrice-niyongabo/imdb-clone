@@ -14,8 +14,8 @@
         <v-menu activator="parent">
           <v-list
             class="mt-3 !bg-[#121212]"
-            @vnode-before-unmount="handleMenuClick()"
-            @vnode-before-mount="handleMenuClick()"
+            @vue:before-unmount="handleMenuClick()"
+            @vue:before-mount="handleMenuClick()"
           >
             <v-list-item
               v-for="(item, index) in filterCategories"
