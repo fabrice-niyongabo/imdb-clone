@@ -90,7 +90,6 @@ export default defineComponent({
   watch: {
     activeMovieIndex() {
       const visibleList = this.returnVisibleIndexes();
-      console.log({ visibleList });
       if (visibleList.includes(this.index)) {
         this.isVisible = true;
       } else {
