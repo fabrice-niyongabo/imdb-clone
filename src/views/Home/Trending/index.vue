@@ -2,7 +2,7 @@
   <section class="bg-black h-[90vh]">
     <v-container>
       <v-row>
-        <v-col md="8">
+        <v-col md="8" class="relative imdb-trending-movies-carausel">
           <Carausel :movies="trendingMovies" />
         </v-col>
         <v-col md="4"></v-col>
@@ -38,14 +38,11 @@ export default defineComponent({
     fetchData() {
       this.isLoading = true;
       axios
-        .get(
-          "https://api.themoviedb.org/3/trending/movie/week?language=en-US",
-          {
-            headers: {
-              Authorization: `Bearer ${API_TOKEN}`,
-            },
-          }
-        )
+        .get("https://api.themoviedb.org/3/trending/movie/day?language=en-US", {
+          headers: {
+            Authorization: `Bearer ${API_TOKEN}`,
+          },
+        })
         .then((res) => {
           this.isLoading = false;
           if (res.data.results) {
@@ -64,3 +61,27 @@ export default defineComponent({
   },
 });
 </script>
+
+<style>
+.imdb-trending-movies-carausel .swiper-button-prev {
+  background-color: rgba(20, 20, 20, 0.8);
+  padding: 2rem 1.5rem;
+  left: 0px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.imdb-trending-movies-carausel .swiper-button-next {
+  background-color: rgba(20, 20, 20, 0.8);
+  padding: 2rem 1.5rem;
+  right: 0px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.imdb-trending-movies-carausel .swiper-button-prev:after,
+.imdb-trending-movies-carausel .swiper-button-next:after {
+  font-size: 25px !important;
+  font-weight: 700;
+}
+</style>
