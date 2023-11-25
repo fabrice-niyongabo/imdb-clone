@@ -1,7 +1,16 @@
 <template>
-  <main>home view {{ API_TOKEN }}</main>
+  <main>
+    <Trending />
+  </main>
 </template>
 
-<script setup lang="ts">
-import { API_TOKEN } from "../../constants";
+<script lang="ts">
+import { defineComponent } from "vue";
+import Trending from "./Trending/index.vue";
+
+export default defineComponent({
+  components: {
+    Trending,
+  },
+});
 </script>
