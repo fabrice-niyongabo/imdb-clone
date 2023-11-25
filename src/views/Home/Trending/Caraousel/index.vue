@@ -6,7 +6,6 @@
     navigation
     :pagination="{ enabled: false }"
     :scrollbar="{ draggable: true }"
-    @swiper="onSwiper"
     @slideChange="onSlideChange"
     autoplay
   >
@@ -15,7 +14,6 @@
       :key="index"
       lazy
       style="height: 500px"
-      :class="'-movie-id-' + index"
     >
       <img
         :src="IMDB_BASE_IMAGE_PATH + movie.backdrop_path"
@@ -103,12 +101,10 @@ export default defineComponent({
     };
   },
   methods: {
-    onSwiper(swiper: any) {
-      console.log({ swiper });
-    },
     onSlideChange(e: any) {
       this.$emit("update-movie", e.activeIndex);
     },
   },
+  emits: ["update-movie"],
 });
 </script>

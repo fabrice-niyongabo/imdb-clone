@@ -5,7 +5,9 @@
         <v-col md="8" class="relative imdb-trending-movies-carausel">
           <Carausel :movies="trendingMovies" @update-movie="updateMovieIndex" />
         </v-col>
-        <v-col md="4"></v-col>
+        <v-col md="4">
+          <List :movies="trendingMovies" :activeMovieIndex="activeMovieIndex" />
+        </v-col>
       </v-row>
     </v-container>
   </section>
@@ -16,6 +18,7 @@ import axios from "axios";
 import { API_TOKEN } from "@/constants";
 import type { ITrendingMovie } from "../../../interfaces";
 import Carausel from "./Caraousel/index.vue";
+import List from "./List/index.vue";
 
 interface IReturnData {
   trendingMovies: ITrendingMovie[];
@@ -27,6 +30,7 @@ interface IReturnData {
 export default defineComponent({
   components: {
     Carausel,
+    List,
   },
   data(): IReturnData {
     return {
