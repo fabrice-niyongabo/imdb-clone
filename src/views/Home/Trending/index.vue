@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col md="8" class="relative imdb-trending-movies-carausel">
-          <Carausel :movies="trendingMovies" />
+          <Carausel :movies="trendingMovies" @update-movie="updateMovieIndex" />
         </v-col>
         <v-col md="4"></v-col>
       </v-row>
@@ -19,6 +19,7 @@ import Carausel from "./Caraousel/index.vue";
 
 interface IReturnData {
   trendingMovies: ITrendingMovie[];
+  activeMovieIndex: number;
   isLoading: boolean;
   error: string;
 }
@@ -29,6 +30,7 @@ export default defineComponent({
   },
   data(): IReturnData {
     return {
+      activeMovieIndex: 0,
       trendingMovies: [],
       isLoading: false,
       error: "",
@@ -48,12 +50,15 @@ export default defineComponent({
           if (res.data.results) {
             this.trendingMovies = res.data.results;
           }
-          console.log({ data: res.data });
+          // console.log({ data: res.data });
         })
         .catch((error) => {
           this.isLoading = false;
           console.log("Error while fetching trending movies", error);
         });
+    },
+    updateMovieIndex(index: number) {
+      this.activeMovieIndex = index;
     },
   },
   mounted() {

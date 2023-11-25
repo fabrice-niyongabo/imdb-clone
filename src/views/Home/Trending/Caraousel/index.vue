@@ -6,13 +6,16 @@
     navigation
     :pagination="{ enabled: false }"
     :scrollbar="{ draggable: true }"
-    loop
+    @swiper="onSwiper"
+    @slideChange="onSlideChange"
+    autoplay
   >
     <swiper-slide
-      v-for="movie in movies"
-      :key="movie.id"
+      v-for="(movie, index) in movies"
+      :key="index"
       lazy
       style="height: 500px"
+      :class="'-movie-id-' + index"
     >
       <img
         :src="IMDB_BASE_IMAGE_PATH + movie.backdrop_path"
@@ -98,6 +101,14 @@ export default defineComponent({
       IMDB_BASE_IMAGE_PATH,
       modules: [Navigation, Pagination, Scrollbar, A11y],
     };
+  },
+  methods: {
+    onSwiper(swiper: any) {
+      console.log({ swiper });
+    },
+    onSlideChange(e: any) {
+      this.$emit("update-movie", e.activeIndex);
+    },
   },
 });
 </script>
