@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-black py-5">
+  <section class="bg-black py-5" ref="section">
     <v-container>
       <div class="flex items-start justify-between">
         <h1 class="capitalize text-imdb-gold text-2xl font-bold">
@@ -27,14 +27,62 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import SectionTitle from "../../../components/SectionTitle/index.vue";
+import type { ITopPickMovie } from "../../../interfaces";
+import { API_TOKEN } from "../../../constants";
+import axios from "axios";
+import { useElementVisibility } from "@vueuse/core";
+
+interface IReturnData {
+  isVisible: any;
+  movies: ITopPickMovie[];
+  isLoading: boolean;
+}
 
 export default defineComponent({
   components: {
     SectionTitle,
   },
-  data() {
-    isVisible: false;
-    movies: [];
+  data(): IReturnData {
+    return {
+      isLoading: false,
+      isVisible: false,
+      movies: [],
+    };
+  },
+  methods: {
+    fetMovies() {
+      this.isLoading = true;
+      axios
+        .get(
+          "https://api.themoviedb.org/3/discover/tv?include_adult=true&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc",
+          {
+            headers: {
+              Authorization: `Bearer ${API_TOKEN}`,
+            },
+          }
+        )
+        .then((res) => {
+          this.isLoading = false;
+          console.log(res.data);
+          if (res.data.results) {
+            this.movies = res.data.results;
+          }
+        })
+        .catch((error) => {
+          this.isLoading = false;
+          console.log({ error });
+        });
+    },
+  },
+  mounted() {
+    this.isVisible = useElementVisibility(this.$refs.section as any);
+  },
+  watch: {
+    isVisible(oldVal, newVal) {
+      if (this.isVisible && this.movies.length === 0) {
+        this.fetMovies();
+      }
+    },
   },
 });
 </script>
