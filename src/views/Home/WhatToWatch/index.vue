@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-black py-5" ref="section">
+  <section class="bg-black py-5 min-h-[50vh]" ref="section">
     <v-container>
       <div class="flex items-start justify-between">
         <h1 class="capitalize text-imdb-gold text-2xl font-bold">
@@ -21,16 +21,20 @@
         sub-title="TV shows and movies just for you"
         class="my-10"
       />
+      <IMDBLoader v-if="isLoading" />
+      <Caraousel :movies="movies" />
     </v-container>
   </section>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
 import SectionTitle from "../../../components/SectionTitle/index.vue";
+import IMDBLoader from "../../../components/IMDBLoader/index.vue";
 import type { ITopPickMovie } from "../../../interfaces";
 import { API_TOKEN } from "../../../constants";
 import axios from "axios";
 import { useElementVisibility } from "@vueuse/core";
+import Caraousel from "./Caraousel/index.vue";
 
 interface IReturnData {
   isVisible: any;
@@ -41,6 +45,8 @@ interface IReturnData {
 export default defineComponent({
   components: {
     SectionTitle,
+    IMDBLoader,
+    Caraousel,
   },
   data(): IReturnData {
     return {
@@ -63,7 +69,6 @@ export default defineComponent({
         )
         .then((res) => {
           this.isLoading = false;
-          console.log(res.data);
           if (res.data.results) {
             this.movies = res.data.results;
           }

@@ -70,27 +70,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style>
-.imdb-trending-movies-carausel .swiper-button-prev {
-  background-color: rgba(20, 20, 20, 0.8);
-  padding: 2rem 1.5rem;
-  left: 0px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.imdb-trending-movies-carausel .swiper-button-next {
-  background-color: rgba(20, 20, 20, 0.8);
-  padding: 2rem 1.5rem;
-  right: 0px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.imdb-trending-movies-carausel .swiper-button-prev:after,
-.imdb-trending-movies-carausel .swiper-button-next:after {
-  font-size: 25px !important;
-  font-weight: 700;
-}
-</style>
