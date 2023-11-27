@@ -3,7 +3,7 @@
     <img
       :src="IMDB_BASE_IMAGE_PATH + movie.poster_path"
       :alt="movie.name"
-      class="h-[250px] w-full"
+      class="h-[290px] w-full"
     />
     <div class="p-3">
       <div class="flex items-center justify-start mb-2 gap-1">
@@ -56,7 +56,7 @@
   <v-dialog v-model="showModal" width="50%">
     <div class="relative">
       <div
-        class="w-[50px] h-[50px] rounded-full flex items-center justify-center absolute right-0 transition-all duration-300 hover:bg-[rgba(255,255,255,0.2)] hover:cursor-pointer"
+        class="w-[50px] h-[50px] bg-[rgba(0,0,0,0.5)] rounded-full flex items-center justify-center absolute right-0 transition-all duration-300 hover:bg-[rgba(255,255,255,0.2)] hover:cursor-pointer"
         @click="toggleModal()"
       >
         <v-icon icon="mdi-close" class="text-white" />

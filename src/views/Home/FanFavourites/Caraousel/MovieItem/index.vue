@@ -3,7 +3,7 @@
     <img
       :src="IMDB_BASE_IMAGE_PATH + movie.poster_path"
       :alt="movie.name"
-      class="h-[250px] w-full"
+      class="h-[290px] w-full"
     />
     <div class="p-3">
       <div class="flex items-center justify-start mb-2 gap-1">
