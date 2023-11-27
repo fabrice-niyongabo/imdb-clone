@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-black py-5 min-h-[50vh]" ref="section">
+  <section class="bg-black py-5" ref="section">
     <div class="container mx-auto">
       <section-title title="From your Watchlist" href="#" class="my-10" />
       <IMDBLoader v-if="isLoading" />
