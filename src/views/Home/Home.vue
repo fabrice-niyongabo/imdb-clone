@@ -4,6 +4,7 @@
     <WhatToWatch />
     <FromWatchList />
     <Top10 />
+    <FanFavourites />
   </main>
 </template>
 
@@ -13,6 +14,7 @@ import Trending from "./Trending/index.vue";
 import WhatToWatch from "./WhatToWatch/index.vue";
 import FromWatchList from "./FromWatchList/index.vue";
 import Top10 from "./Top10/index.vue";
+import FanFavourites from "./FanFavourites/index.vue";
 
 export default defineComponent({
   components: {
@@ -20,6 +22,7 @@ export default defineComponent({
     WhatToWatch,
     FromWatchList,
     Top10,
+    FanFavourites,
   },
 });
 </script>
