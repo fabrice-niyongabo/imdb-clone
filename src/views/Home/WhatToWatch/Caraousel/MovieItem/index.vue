@@ -44,8 +44,8 @@
     </div>
     <div class="absolute top-0 left-0 z-[10]">
       <IMDBBookmarkIcon
-        bg-color="#121212d7"
-        hover-bg="red"
+        bg-color="#121212b4"
+        hover-bg="#121212d5"
         height="40px"
         width="30px"
       />
