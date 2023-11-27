@@ -5,7 +5,7 @@
       @mouseover="onMouseOver()"
       @mouseout="onMouseOut()"
     >
-      <div class="w-1 rounded-md bg-[#F5C518]">&nbsp;</div>
+      <div class="w-1 rounded-md bg-[#F5C518]" v-if="showLeftBar">&nbsp;</div>
       <h2 class="text-xl font-bold m-0 p-0">{{ title }}</h2>
       <v-icon
         icon="mdi-chevron-right"
@@ -22,6 +22,7 @@ export default defineComponent({
   props: {
     title: { type: String, required: true },
     subTitle: { type: String },
+    showLeftBar: { type: Boolean, default: true },
     href: { type: String, required: true },
   },
   data() {
