@@ -1,7 +1,7 @@
 <template>
   <div
-    :class="`inline-block bg-[${bgColor}] h-[${height}] w-[${width}] hover:bg-[${hoverBg}] relative cursor-pointer`"
-    style="
+    class="inline-block relative cursor-pointer"
+    :style="`
       clip-path: polygon(
         0 0,
         0% 20%,
@@ -16,7 +16,11 @@
         80% 0%,
         41% 0
       );
-    "
+    background-color: ${isHovered && hoverBg ? hoverBg : bgColor}; 
+    height:${height};
+    width:${width}`"
+    @mouseover="onMouseOver()"
+    @mouseout="onMouseOut()"
   >
     <div
       class="absolute top-0 bottom-0 left-0 right-0 pb-2 flex items-center justify-center"
@@ -33,6 +37,19 @@ export default defineComponent({
     height: { type: String, required: true },
     bgColor: { type: String, required: true },
     hoverBg: { type: String },
+  },
+  data() {
+    return {
+      isHovered: false,
+    };
+  },
+  methods: {
+    onMouseOver() {
+      this.isHovered = true;
+    },
+    onMouseOut() {
+      this.isHovered = false;
+    },
   },
 });
 </script>
