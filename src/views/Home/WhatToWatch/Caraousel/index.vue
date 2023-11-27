@@ -3,7 +3,7 @@
     <swiper
       :modules="modules"
       :slides-per-view="6"
-      :space-between="50"
+      :space-between="10"
       navigation
       :pagination="{ enabled: false }"
       :scrollbar="{ draggable: true }"

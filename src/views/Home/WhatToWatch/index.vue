@@ -1,6 +1,6 @@
 <template>
   <section class="bg-black py-5 min-h-[50vh]" ref="section">
-    <v-container>
+    <div class="container mx-auto">
       <div class="flex items-start justify-between">
         <h1 class="capitalize text-imdb-gold text-2xl font-bold">
           What to watch
@@ -23,7 +23,7 @@
       />
       <IMDBLoader v-if="isLoading" />
       <Caraousel :movies="movies" />
-    </v-container>
+    </div>
   </section>
 </template>
 <script lang="ts">

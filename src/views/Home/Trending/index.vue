@@ -1,6 +1,6 @@
 <template>
-  <section class="bg-black h-[90vh]">
-    <v-container>
+  <section class="bg-black h-[90vh] lg:h-auto">
+    <div class="container mx-auto">
       <v-row>
         <v-col md="8" class="relative imdb-trending-movies-carausel">
           <Carausel :movies="trendingMovies" @update-movie="updateMovieIndex" />
@@ -9,7 +9,7 @@
           <List :movies="trendingMovies" :activeMovieIndex="activeMovieIndex" />
         </v-col>
       </v-row>
-    </v-container>
+    </div>
   </section>
 </template>
 <script lang="ts">
