@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-[#121212] shadow-md mb-3">
+  <header class="bg-[#121212] shadow-md">
     <nav class="container mx-auto py-2 flex items-center justify-between gap-2">
       <router-link to="/">
         <svg
