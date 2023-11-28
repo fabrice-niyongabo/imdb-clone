@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-black h-[90vh] xl:h-auto">
+  <section class="bg-black h-[90vh] lg:h-auto">
     <div class="container mx-auto">
       <v-row>
         <v-col md="8" class="relative imdb-trending-movies-carausel">
