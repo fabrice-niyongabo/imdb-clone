@@ -1,10 +1,12 @@
 <template>
   <div class="bg-imdb-black relative">
-    <img
-      :src="IMDB_BASE_IMAGE_PATH + movie.poster_path"
-      :alt="movie.name"
-      class="h-[300px] w-full"
-    />
+    <router-link :to="'/movie/' + movie.id">
+      <img
+        :src="IMDB_BASE_IMAGE_PATH + movie.poster_path"
+        :alt="movie.name"
+        class="h-[300px] w-full"
+      />
+    </router-link>
     <div class="p-3">
       <div class="flex items-center justify-start mb-2 gap-1">
         <div>

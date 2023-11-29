@@ -11,6 +11,7 @@ import Details from "./Details/index.vue";
 interface IReturnData {
   tvDetails: ITVDetails | null;
   isLoading: boolean;
+  isLoadingVideos: boolean;
 }
 
 export default defineComponent({
@@ -21,6 +22,7 @@ export default defineComponent({
     return {
       tvDetails: null,
       isLoading: true,
+      isLoadingVideos: true,
     };
   },
   methods: {
@@ -40,6 +42,27 @@ export default defineComponent({
         .then((res) => {
           this.isLoading = false;
           this.tvDetails = res.data;
+          this.fetchVideos();
+        })
+        .catch((error) => {
+          this.isLoading = false;
+          console.log({ error });
+        });
+    },
+    fetchVideos() {
+      this.isLoadingVideos = true;
+      axios
+        .get(
+          "http://api.themoviedb.org/3/tv/" + this.$route.params.id + "/videos",
+          {
+            headers: {
+              Authorization: `Bearer ${API_TOKEN}`,
+            },
+          }
+        )
+        .then((res) => {
+          this.isLoadingVideos = false;
+          console.log({ videos: res.data });
         })
         .catch((error) => {
           this.isLoading = false;
