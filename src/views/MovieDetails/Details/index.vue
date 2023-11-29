@@ -89,7 +89,9 @@
               class="bg-imdb-light-black p-5 flex items-center justify-center flex-1 flex-col w-full"
             >
               <v-icon icon="mdi-image-multiple" />
-              <p class="mt-2 uppercase text-xs font-semibold">1 Photos</p>
+              <p class="mt-2 uppercase text-xs font-semibold">
+                {{ images.length }} Photos
+              </p>
             </div>
           </div>
         </div>
@@ -187,7 +189,7 @@ import { defineComponent } from "vue";
 import type { PropType } from "vue";
 import { IMDB_BASE_IMAGE_PATH } from "../../../constants";
 
-import type { IMovieDetails, IVideo } from "../../../interfaces";
+import type { IMovieDetails, IVideo, IImage } from "../../../interfaces";
 
 export default defineComponent({
   props: {
@@ -196,6 +198,7 @@ export default defineComponent({
       required: true,
     },
     videos: { type: Array as PropType<IVideo[]>, required: true },
+    images: { type: Array as PropType<IImage[]>, required: true },
     isLoadingVideo: { type: Boolean, required: true },
     isLoading: { type: Boolean, required: true },
   },

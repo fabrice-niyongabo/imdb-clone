@@ -4,12 +4,13 @@
     :videos="movieVideos"
     :is-loading="isLoading"
     :is-loading-video="isLoadingVideos"
+    :images="movieImages"
   />
 </template>
 <script lang="ts">
 import axios from "axios";
 import { defineComponent } from "vue";
-import type { IMovieDetails, IVideo } from "../../interfaces";
+import type { IMovieDetails, IVideo, IImage } from "../../interfaces";
 import { API_TOKEN } from "@/constants";
 import Details from "./Details/index.vue";
 
@@ -17,7 +18,9 @@ interface IReturnData {
   movieDetails: IMovieDetails | null;
   isLoading: boolean;
   isLoadingVideos: boolean;
+  isLoadingImages: boolean;
   movieVideos: IVideo[];
+  movieImages: IImage[];
 }
 
 export default defineComponent({
@@ -29,7 +32,9 @@ export default defineComponent({
       movieDetails: null,
       isLoading: true,
       isLoadingVideos: true,
+      isLoadingImages: true,
       movieVideos: [],
+      movieImages: [],
     };
   },
   methods: {
@@ -50,6 +55,7 @@ export default defineComponent({
           this.isLoading = false;
           this.movieDetails = res.data;
           this.fetchVideos();
+          this.fetchImages();
         })
         .catch((error) => {
           this.isLoading = false;
@@ -77,6 +83,30 @@ export default defineComponent({
         })
         .catch((error) => {
           this.isLoadingVideos = false;
+          console.log({ error });
+        });
+    },
+    fetchImages() {
+      this.isLoadingImages = true;
+      axios
+        .get(
+          "http://api.themoviedb.org/3/movie/" +
+            this.$route.params.id +
+            "/images",
+          {
+            headers: {
+              Authorization: `Bearer ${API_TOKEN}`,
+            },
+          }
+        )
+        .then((res) => {
+          this.isLoadingImages = false;
+          if (res.data.backdrops) {
+            this.movieImages = res.data.backdrops;
+          }
+        })
+        .catch((error) => {
+          this.isLoadingImages = false;
           console.log({ error });
         });
     },

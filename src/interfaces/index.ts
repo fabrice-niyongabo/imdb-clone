@@ -198,3 +198,13 @@ export interface IVideo {
   published_at: string;
   id: string;
 }
+
+export interface IImage {
+  aspect_ratio: number;
+  height: number;
+  iso_639_1: any;
+  file_path: string;
+  vote_average: number;
+  vote_count: number;
+  width: number;
+}
