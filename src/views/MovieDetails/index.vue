@@ -6,13 +6,15 @@
     :is-loading-video="isLoadingVideos"
     :images="movieImages"
   />
-  <div class="container mx-auto mt-5">
+  <div class="container mx-auto mt-5 pb-10">
     <v-row>
       <v-col md="8">
         <Videos :videos="movieVideos" />
         <Images :images="movieImages" />
       </v-col>
-      <v-col md="4"></v-col>
+      <v-col md="4">
+        <RelatedMovies />
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -24,6 +26,7 @@ import { API_TOKEN } from "@/constants";
 import Details from "./Details/index.vue";
 import Videos from "./Videos/index.vue";
 import Images from "./Images/index.vue";
+import RelatedMovies from "./RelatedMovies/index.vue";
 
 interface IReturnData {
   movieDetails: IMovieDetails | null;
@@ -39,6 +42,7 @@ export default defineComponent({
     Details,
     Images,
     Videos,
+    RelatedMovies,
   },
   data(): IReturnData {
     return {
@@ -52,6 +56,7 @@ export default defineComponent({
   },
   methods: {
     fetchDetails() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
       this.isLoading = true;
       axios
         .get(
@@ -124,8 +129,15 @@ export default defineComponent({
         });
     },
   },
-  mounted() {
+
+  created() {
     this.fetchDetails();
+    this.$watch(
+      () => this.$route.params,
+      (toParams, previousParams) => {
+        this.fetchDetails();
+      }
+    );
   },
 });
 </script>

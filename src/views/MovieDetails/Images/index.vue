@@ -2,7 +2,12 @@
   <div class="mt-5">
     <h2 class="text-2xl font-semibold mb-3">Images</h2>
     <v-row>
-      <v-col v-for="(image, key) in images" :key="key" sm="6" md="4">
+      <v-col
+        v-for="(image, key) in images.slice(0, 9)"
+        :key="key"
+        sm="6"
+        md="4"
+      >
         <img
           :src="IMDB_BASE_IMAGE_PATH + image.file_path"
           class="img w-full rounded-md transition-all duration-500 shadow-md"
