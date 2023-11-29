@@ -1,10 +1,15 @@
 <template>
-  <Details :details="movieDetails" />
+  <Details
+    :details="movieDetails"
+    :videos="movieVideos"
+    :is-loading="isLoading"
+    :is-loading-video="isLoadingVideos"
+  />
 </template>
 <script lang="ts">
 import axios from "axios";
 import { defineComponent } from "vue";
-import type { IMovieDetails } from "../../interfaces";
+import type { IMovieDetails, IVideo } from "../../interfaces";
 import { API_TOKEN } from "@/constants";
 import Details from "./Details/index.vue";
 
@@ -12,6 +17,7 @@ interface IReturnData {
   movieDetails: IMovieDetails | null;
   isLoading: boolean;
   isLoadingVideos: boolean;
+  movieVideos: IVideo[];
 }
 
 export default defineComponent({
@@ -23,6 +29,7 @@ export default defineComponent({
       movieDetails: null,
       isLoading: true,
       isLoadingVideos: true,
+      movieVideos: [],
     };
   },
   methods: {
@@ -64,10 +71,12 @@ export default defineComponent({
         )
         .then((res) => {
           this.isLoadingVideos = false;
-          console.log({ videos: res.data });
+          if (res.data.results) {
+            this.movieVideos = res.data.results;
+          }
         })
         .catch((error) => {
-          this.isLoading = false;
+          this.isLoadingVideos = false;
           console.log({ error });
         });
     },

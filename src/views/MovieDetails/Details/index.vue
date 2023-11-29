@@ -53,15 +53,27 @@
             </div>
           </div>
         </div>
-        <div class="flex items-start justify-between gap-1 mt-5 h-[300px]">
+        <div class="flex items-start justify-between gap-4 mt-5 h-[320px]">
           <div>
             <img
               :src="IMDB_BASE_IMAGE_PATH + details?.poster_path"
               :alt="details?.title"
-              class="w-[210px] h-[300px]"
+              class="w-[250px] h-[320px]"
             />
           </div>
-          <div class="flex-1"></div>
+          <div class="flex-1">
+            <div v-if="!isLoadingVideo && videos.length > 0">
+              <iframe
+                width="100%"
+                height="320"
+                :src="`https://www.youtube.com/embed/${videos[0].key}`"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
           <div
             class="flex flex-col gap-1 justify-between items-center w-[150px] h-full"
           >
@@ -69,7 +81,9 @@
               class="bg-imdb-light-black p-5 flex items-center justify-center flex-1 flex-col w-full"
             >
               <v-icon icon="mdi-play-box-multiple" />
-              <p class="mt-2 uppercase text-xs font-semibold">1 video</p>
+              <p class="mt-2 uppercase text-xs font-semibold">
+                {{ videos.length }} video
+              </p>
             </div>
             <div
               class="bg-imdb-light-black p-5 flex items-center justify-center flex-1 flex-col w-full"
@@ -149,7 +163,7 @@
           </div>
           <div class="w-[40%]">
             <div
-              class="bg-imdb-gold flex items-center justify-between gap-2 rounded-sm px-2 py-2 hover:opacity-80 hover:cursor-pointer"
+              class="bg-imdb-gold flex items-center justify-between gap-2 rounded-sm px-2 py-2 hover:opacity-80 hover:cursor-pointer select-none"
             >
               <div>
                 <v-icon icon="mdi-plus" class="text-black" />
@@ -173,7 +187,7 @@ import { defineComponent } from "vue";
 import type { PropType } from "vue";
 import { IMDB_BASE_IMAGE_PATH } from "../../../constants";
 
-import type { IMovieDetails } from "../../../interfaces";
+import type { IMovieDetails, IVideo } from "../../../interfaces";
 
 export default defineComponent({
   props: {
@@ -181,6 +195,9 @@ export default defineComponent({
       type: Object as PropType<IMovieDetails | null>,
       required: true,
     },
+    videos: { type: Array as PropType<IVideo[]>, required: true },
+    isLoadingVideo: { type: Boolean, required: true },
+    isLoading: { type: Boolean, required: true },
   },
   data() {
     return {
