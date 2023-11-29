@@ -123,14 +123,14 @@
             <li
               class="border-t-[1px] border-gray-300 font-bold py-2 flex items-start justify-start gap-2"
             >
-              <span>Number of seasons</span>
+              <span>Number of seasons:</span>
               <span class="text-imdb-blue">{{ details?.seasons.length }} </span>
             </li>
           </ul>
         </div>
         <div class="w-[40%]">
           <div
-            class="bg-imdb-gold flex items-center justify-between gap-2 rounded-sm px-2 py-2"
+            class="bg-imdb-gold flex items-center justify-between gap-2 rounded-sm px-2 py-2 hover:opacity-80 hover:cursor-pointer"
           >
             <div>
               <v-icon icon="mdi-plus" class="text-black" />
