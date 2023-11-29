@@ -1,0 +1,66 @@
+<template>
+  <div class="imdb-trending-movies-carausel video-carausel">
+    <swiper
+      :modules="modules"
+      :slides-per-view="2"
+      :space-between="50"
+      navigation
+      :pagination="{ enabled: false }"
+      :scrollbar="{ draggable: true }"
+      autoplay
+    >
+      <swiper-slide
+        v-for="(video, index) in videos.slice(0, 4)"
+        :key="index"
+        style="height: 250px"
+      >
+        <iframe
+          width="100%"
+          height="250"
+          :src="`https://www.youtube.com/embed/${video.key}`"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </swiper-slide>
+    </swiper>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+import { IMDB_BASE_IMAGE_PATH } from "../../../../constants";
+import type { IVideo } from "../../../../interfaces";
+import type { PropType } from "vue";
+
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+
+// Import Swiper Vue.js components
+import { Swiper, SwiperSlide } from "swiper/vue";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+
+export default defineComponent({
+  components: {
+    Swiper,
+    SwiperSlide,
+  },
+  props: {
+    videos: {
+      type: Array as PropType<IVideo[]>,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      IMDB_BASE_IMAGE_PATH,
+      modules: [Navigation, Pagination, Scrollbar, A11y],
+    };
+  },
+});
+</script>

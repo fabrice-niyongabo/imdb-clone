@@ -6,6 +6,14 @@
     :is-loading-video="isLoadingVideos"
     :images="movieImages"
   />
+  <div class="container mx-auto mt-5">
+    <v-row>
+      <v-col md="8">
+        <Videos :videos="movieVideos" />
+      </v-col>
+      <v-col md="4"></v-col>
+    </v-row>
+  </div>
 </template>
 <script lang="ts">
 import axios from "axios";
@@ -13,6 +21,8 @@ import { defineComponent } from "vue";
 import type { IMovieDetails, IVideo, IImage } from "../../interfaces";
 import { API_TOKEN } from "@/constants";
 import Details from "./Details/index.vue";
+import Videos from "./Videos/index.vue";
+import Images from "./Images/index.vue";
 
 interface IReturnData {
   movieDetails: IMovieDetails | null;
@@ -26,6 +36,8 @@ interface IReturnData {
 export default defineComponent({
   components: {
     Details,
+    Images,
+    Videos,
   },
   data(): IReturnData {
     return {

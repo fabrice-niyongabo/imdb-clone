@@ -43,3 +43,8 @@ body {
 .top-arrows .swiper-button-prev {
   top: 150px !important;
 }
+
+.video-carausel .swiper-button-next,
+.video-carausel .swiper-button-prev {
+  color: #fff !important;
+}

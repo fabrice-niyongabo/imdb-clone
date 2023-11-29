@@ -9,7 +9,11 @@
       <h2 class="text-xl font-bold m-0 p-0">{{ title }}</h2>
       <v-icon
         icon="mdi-chevron-right"
-        :class="isHovered ? 'text-imdb-gold' : 'text-white'"
+        :class="
+          isHovered
+            ? 'text-imdb-gold'
+            : `${darkIcon ? 'text-black' : 'text-white'}`
+        "
         size="x-large"
       />
     </div>
@@ -23,6 +27,7 @@ export default defineComponent({
     title: { type: String, required: true },
     subTitle: { type: String },
     showLeftBar: { type: Boolean, default: true },
+    darkIcon: { type: Boolean, default: false },
     href: { type: String, required: true },
   },
   data() {
