@@ -4,7 +4,10 @@
     <v-col md="4" v-for="movie in movies.slice(0, 12)" :key="movie.id">
       <router-link :to="'/movie/' + movie.id">
         <div class="shadow-md rounded-md">
-          <img :src="IMDB_BASE_IMAGE_PATH + movie.poster_path" />
+          <img
+            :src="IMDB_BASE_IMAGE_PATH + movie.poster_path"
+            class="w-full rounded-t-md"
+          />
           <div class="p-3">
             <p class="text-sm font-semibold">{{ movie.title }}</p>
           </div>
@@ -59,7 +62,7 @@ export default defineComponent({
         .get(
           "https://api.themoviedb.org/3/movie/" +
             this.$route.params.id +
-            "/similar?language=en-US&page=1",
+            "/recommendations?language=en-US&page=1",
           {
             headers: {
               Authorization: `Bearer ${API_TOKEN}`,

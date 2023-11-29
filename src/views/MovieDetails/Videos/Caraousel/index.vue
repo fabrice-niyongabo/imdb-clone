@@ -10,7 +10,7 @@
       autoplay
     >
       <swiper-slide
-        v-for="(video, index) in videos.slice(0, 4)"
+        v-for="(video, index) in returnSliderMovies()"
         :key="index"
         style="height: 250px"
       >
@@ -67,6 +67,15 @@ export default defineComponent({
     return {
       modules: [Navigation, Pagination, Scrollbar, A11y],
     };
+  },
+  methods: {
+    returnSliderMovies() {
+      if (this.videos.length <= 1) {
+        return this.videos;
+      } else {
+        return this.videos.slice(1, 4);
+      }
+    },
   },
 });
 </script>
