@@ -10,6 +10,7 @@
     <v-row>
       <v-col md="8">
         <Videos :videos="movieVideos" />
+        <Images :images="movieImages" />
       </v-col>
       <v-col md="4"></v-col>
     </v-row>

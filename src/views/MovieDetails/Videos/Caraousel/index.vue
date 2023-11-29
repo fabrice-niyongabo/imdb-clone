@@ -24,13 +24,20 @@
           allowfullscreen
         ></iframe>
       </swiper-slide>
+      <swiper-slide style="height: 250px">
+        <div
+          class="flex items-center justify-center flex-col bg-imdb-black w-full h-full text-white gap-2 cursor-pointer"
+        >
+          <v-icon icon="mdi-play-box-multiple" size="60" />
+          <p>Play all {{ videos.length }} videos</p>
+        </div>
+      </swiper-slide>
     </swiper>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { IMDB_BASE_IMAGE_PATH } from "../../../../constants";
 import type { IVideo } from "../../../../interfaces";
 import type { PropType } from "vue";
 
@@ -58,7 +65,6 @@ export default defineComponent({
   },
   data() {
     return {
-      IMDB_BASE_IMAGE_PATH,
       modules: [Navigation, Pagination, Scrollbar, A11y],
     };
   },
