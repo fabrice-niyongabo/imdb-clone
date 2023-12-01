@@ -8,6 +8,7 @@
       <div class="w-1 rounded-md bg-[#F5C518]" v-if="showLeftBar">&nbsp;</div>
       <h2 class="text-xl font-bold m-0 p-0">{{ title }}</h2>
       <v-icon
+        v-if="showIcon"
         icon="mdi-chevron-right"
         :class="
           isHovered
@@ -27,6 +28,7 @@ export default defineComponent({
     title: { type: String, required: true },
     subTitle: { type: String },
     showLeftBar: { type: Boolean, default: true },
+    showIcon: { type: Boolean, default: true },
     darkIcon: { type: Boolean, default: false },
     href: { type: String, required: true },
   },
