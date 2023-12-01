@@ -208,3 +208,23 @@ export interface IImage {
   vote_count: number;
   width: number;
 }
+
+export interface ISearchResult {
+  adult: boolean;
+  backdrop_path: string;
+  id: number;
+  name: string;
+  title: string;
+  original_language: string;
+  original_name: string;
+  overview: string;
+  poster_path: string;
+  profile_path: string;
+  media_type: "tv" | "movie" | "tv" | "keyword" | "company" | "person";
+  genre_ids: number[];
+  popularity: number;
+  first_air_date: string;
+  vote_average: number;
+  vote_count: number;
+  origin_country: string[];
+}
