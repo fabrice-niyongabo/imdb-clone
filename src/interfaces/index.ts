@@ -224,6 +224,7 @@ export interface ISearchResult {
   genre_ids: number[];
   popularity: number;
   first_air_date: string;
+  release_date: string;
   vote_average: number;
   vote_count: number;
   origin_country: string[];

@@ -30,18 +30,26 @@
         </div>
         <div class="flex-1">
           <p class="text-white">{{ result.name || result.title }}</p>
-          <p class="text-gray-400 text-xs">{{ result.first_air_date }}</p>
+          <p class="text-gray-400 text-xs">
+            {{ result.first_air_date || result.release_date }}
+          </p>
           <p class="text-gray-400 text-xs line-clamp-1">
             {{ result.overview }}
           </p>
         </div>
       </li>
       <li class="p-2">
-        <router-link to="#"
-          ><p class="text-white text-sm">
-            See all results for "{{ keyword }}"
-          </p></router-link
+        <router-link
+          :to="{
+            path: '/find/',
+            query: {
+              q: keyword,
+              t: searchType,
+            },
+          }"
         >
+          <p class="text-white text-sm">See all results for "{{ keyword }}"</p>
+        </router-link>
       </li>
     </ul>
 
