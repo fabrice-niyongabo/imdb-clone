@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts" setup></script>
-<style>
+<style scoped>
 .lds-ellipsis {
   display: inline-block;
   position: relative;
