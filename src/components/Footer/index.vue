@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-black pb-5">
+  <footer class="bg-black pb-5 pt-2">
     <div class="container mx-auto">
       <div class="flex items-center justify-center">
         <v-btn class="!bg-imdb-gold !normal-case" :elevation="0"
