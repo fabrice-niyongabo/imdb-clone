@@ -1,10 +1,14 @@
 <template>
-  <div class="bg-imdb-search-bg absolute top-0 left-0 right-0 z-[1] mt-[30px]">
+  <div
+    class="bg-imdb-search-bg absolute top-0 left-0 right-0 z-[5] mt-[30px]"
+    v-if="showMenu"
+  >
     <ul class="mt-2">
       <li
         v-for="(result, index) in resultsToShow"
         :key="index"
-        class="flex items-start justify-between gap-2 border-b-[1px] border-b-gray-200 p-3"
+        class="flex items-start justify-between gap-2 border-b-[1px] border-b-gray-200 p-3 hover:bg-imdb-light-blue-bg hover:cursor-pointer"
+        @click="navigateTo(returnPath(result))"
       >
         <div>
           <v-icon
@@ -71,6 +75,23 @@ export default defineComponent({
       IMDB_BASE_IMAGE_PATH,
     };
   },
+  methods: {
+    navigateTo(path: string) {
+      this.$router.push({ path });
+      this.$emit("close-menu");
+    },
+    returnPath(item: ISearchResult) {
+      // if (item.media_type === "movie") {
+      //   return "/movie/" + item.id;
+      // }
+
+      if (item.media_type === "tv") {
+        return "/tv/" + item.id;
+      }
+
+      return "/movie/" + item.id;
+    },
+  },
   watch: {
     results() {
       if (this.searchType !== "multi") {
@@ -86,8 +107,10 @@ export default defineComponent({
         //tv series
         const tvSeries = this.results.filter((item) => item.media_type == "tv");
         res = [...res, ...tvSeries.slice(0, 2)];
+        this.resultsToShow = res;
       }
     },
   },
+  emits: ["close-menu"],
 });
 </script>

@@ -60,6 +60,8 @@
         placeholder="Search IMDB"
         v-model="keyword"
         class="w-full bg-white h-[30px] outline-none px-3 text-sm"
+        @focus="onFocus()"
+        @focusout="onFocusOut()"
       />
 
       <div
@@ -74,6 +76,7 @@
       :show-menu="showResults"
       :search-type="selectedFilterCategory.value"
       :keyword="keyword"
+      @close-menu="showResults = false"
     />
   </div>
 </template>
@@ -186,11 +189,24 @@ export default defineComponent({
           console.log({ error });
         });
     },
+    onFocus() {
+      if (this.keyword.trim().length > 0) {
+        this.showResults = true;
+      } else {
+        this.showResults = false;
+      }
+    },
+    onFocusOut() {
+      setTimeout(() => {
+        this.showResults = false;
+      }, 100);
+    },
   },
   watch: {
     keyword() {
       if (this.keyword.trim().length > 0) {
         this.handleSearch();
+        this.showResults = true;
       } else {
         this.isLoading = false;
         this.results = [];
