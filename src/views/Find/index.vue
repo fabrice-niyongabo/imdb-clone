@@ -13,7 +13,9 @@
           <v-col
             md="6"
             class="mt-5"
-            v-if="results.filter((item) => item.media_type === 'movie')"
+            v-if="
+              results.filter((item) => item.media_type === 'movie').length > 0
+            "
           >
             <SectionTitle title="Movies" href="#" :show-icon="false" />
             <div class="mt-5 border p-5 rounded-sm">
@@ -58,7 +60,7 @@
           <v-col
             md="6"
             class="mt-5"
-            v-if="results.filter((item) => item.media_type === 'movie')"
+            v-if="results.filter((item) => item.media_type === 'tv').length > 0"
           >
             <SectionTitle title="TV Series" href="#" :show-icon="false" />
             <div class="mt-5 border p-5 rounded-sm">
@@ -195,7 +197,10 @@
       </div>
     </div>
 
-    <div v-if="!isLoading" class="mt-5 text-center justify-center">
+    <div
+      v-if="!isLoading && !stopLoadingMore"
+      class="mt-5 text-center justify-center"
+    >
       <IMDBBlackLoader v-if="isLoadingMore" />
       <v-btn
         v-else
@@ -220,6 +225,7 @@ import IMDBBlackLoader from "../../components/IMDBBlackLoader/index.vue";
 interface IReturnData {
   isLoading: boolean;
   isLoadingMore: boolean;
+  stopLoadingMore: boolean;
   IMDB_BASE_IMAGE_PATH: string;
   results: ISearchResult[];
   page: number;
@@ -232,6 +238,7 @@ export default defineComponent({
   },
   data(): IReturnData {
     return {
+      stopLoadingMore: false,
       isLoading: false,
       isLoadingMore: false,
       IMDB_BASE_IMAGE_PATH,
@@ -267,7 +274,13 @@ export default defineComponent({
           this.isLoading = false;
           this.isLoadingMore = false;
           if (res.data.results) {
-            this.results = [...this.results, ...res.data.results];
+            if (res.data.results.length > 0) {
+              this.results = [...this.results, ...res.data.results];
+            } else {
+              this.stopLoadingMore = true;
+            }
+          } else {
+            this.stopLoadingMore = true;
           }
         })
         .catch((error) => {
