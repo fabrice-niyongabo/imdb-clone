@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <router-link :to="href" class="block">
     <div
       class="inline-flex items-center justify-between gap-2 hover:cursor-pointer"
       @mouseover="onMouseOver()"
@@ -19,7 +19,7 @@
       />
     </div>
     <p class="text-gray-400">{{ subTitle }}</p>
-  </div>
+  </router-link>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
