@@ -6,6 +6,7 @@ import Find from "../views/Find/index.vue";
 import Login from "../views/Login/index.vue";
 import Register from "../views/Register/index.vue";
 import TopPicks from "../views/TopPicks/index.vue";
+import Fan from "../views/Fan/index.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +45,11 @@ const router = createRouter({
       path: "/toppicks",
       name: "toppicks",
       component: TopPicks,
+    },
+    {
+      path: "/fan",
+      name: "fan",
+      component: Fan,
     },
   ],
 });

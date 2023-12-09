@@ -3,7 +3,7 @@
     <div class="container mx-auto">
       <section-title
         title="Fan favorites"
-        href="#"
+        href="/fan"
         sub-title="This week's top TV and movies"
         class="my-10"
       />

@@ -17,7 +17,7 @@
       </div>
       <section-title
         title="Top picks"
-        href="toppicks"
+        href="/toppicks"
         sub-title="TV shows and movies just for you"
         class="my-10"
       />

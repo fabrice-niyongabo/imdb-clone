@@ -48,10 +48,10 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import type { PropType } from "vue";
-import type { ITopPickMovie } from "../../../../../interfaces";
-import { IMDB_BASE_IMAGE_PATH } from "../../../../../constants";
-import SectionTitle from "../../../../../components/SectionTitle/index.vue";
-import IMDBBookmarkIcon from "../../../../../components/IMDBBookmarkIcon/index.vue";
+import type { ITopPickMovie } from "../../../interfaces";
+import { IMDB_BASE_IMAGE_PATH } from "../../../constants";
+import SectionTitle from "../../../components/SectionTitle/index.vue";
+import IMDBBookmarkIcon from "../../../components/IMDBBookmarkIcon/index.vue";
 export default defineComponent({
   props: {
     movie: { type: Object as PropType<ITopPickMovie>, required: true },
