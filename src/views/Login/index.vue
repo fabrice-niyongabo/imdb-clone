@@ -5,7 +5,7 @@
         <div>
           <h2 class="text-center text-2xl font-semibold mb-5">Sign in</h2>
           <div class="w-full md:w-[70%] m-auto">
-            <RouterLink to="/mdi-login">
+            <RouterLink to="/imdb-login">
               <div
                 class="border py-1 px-2 flex items-center justify-between rounded-md gap-2"
               >

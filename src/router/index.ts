@@ -8,6 +8,7 @@ import Register from "../views/Register/index.vue";
 import TopPicks from "../views/TopPicks/index.vue";
 import Fan from "../views/Fan/index.vue";
 import Upcoming from "../views/Upcoming/index.vue";
+import ImdbLogin from "../views/ImdbLogin/index.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,6 +57,11 @@ const router = createRouter({
       path: "/upcoming",
       name: "upcoming",
       component: Upcoming,
+    },
+    {
+      path: "/imdb-login",
+      name: "imdb-login",
+      component: ImdbLogin,
     },
   ],
 });

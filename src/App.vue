@@ -1,7 +1,7 @@
 <template>
-  <Header />
+  <Header v-if="$route.path !== '/imdb-login'" />
   <RouterView />
-  <Footer />
+  <Footer v-if="$route.path !== '/imdb-login'" />
 </template>
 
 <script setup lang="ts">
