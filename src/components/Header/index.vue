@@ -77,12 +77,14 @@
         prepend-icon="mdi-bookmark-plus"
         >Watchlist</v-btn
       >
-      <v-btn
-        elevation="0"
-        color="#121212"
-        class="hover:cursor-pointer hover:bg-[#252525] !capitalize"
-        >sign in</v-btn
-      >
+      <RouterLink to="/login">
+        <v-btn
+          elevation="0"
+          color="#121212"
+          class="hover:cursor-pointer hover:bg-[#252525] !capitalize"
+          >sign in</v-btn
+        >
+      </RouterLink>
       <Languages />
     </nav>
   </header>
