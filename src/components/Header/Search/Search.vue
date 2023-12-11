@@ -199,7 +199,7 @@ export default defineComponent({
     onFocusOut() {
       setTimeout(() => {
         this.showResults = false;
-      }, 100);
+      }, 300);
     },
   },
   watch: {
