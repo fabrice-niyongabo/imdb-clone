@@ -3,7 +3,7 @@
     <div class="container mx-auto">
       <section-title
         title="Comming soon to theaters"
-        href="#"
+        href="/upcoming"
         sub-title="Trailers for upcomming releases"
         class="my-10"
       />
