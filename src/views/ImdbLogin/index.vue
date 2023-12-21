@@ -35,12 +35,10 @@
       <div class="mt-5 border p-5 rounded-md w-[80%] md:w-[35%]">
         <h2 class="text-2xl font-semibold mb-5">Sign in</h2>
         <div class="my-2">
-          <label class="font-semibold text-sm"
-            >Email or mobile phone number
-          </label>
+          <label class="font-semibold text-sm">Email </label>
           <input
             type="text"
-            class="border rounded-md outline-none w-full block py-1 px-2 text-sm focus:!border-imdb-gold transition-all duration-500"
+            class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500"
           />
         </div>
         <div class="my-2">
@@ -52,7 +50,7 @@
           </div>
           <input
             type="password"
-            class="border rounded-md outline-none w-full block py-1 px-2 text-sm focus:!border-imdb-gold transition-all duration-500"
+            class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500"
           />
         </div>
         <v-btn
