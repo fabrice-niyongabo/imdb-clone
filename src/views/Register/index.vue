@@ -37,36 +37,62 @@
         <div class="my-2">
           <label class="font-semibold text-sm">Full Name</label>
           <input
+            ref="names"
             type="text"
+            :disabled="isSubmitting"
+            v-model="state.names"
             placeholder="Enter your name"
-            class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500"
+            class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500 disabled:bg-gray-100"
           />
+          <span v-if="errors.names !== ''" class="text-xs text-red-500">{{
+            errors.names
+          }}</span>
         </div>
         <div class="my-2">
           <label class="font-semibold text-sm">Email</label>
           <input
             type="text"
+            ref="email"
+            :disabled="isSubmitting"
+            v-model="state.email"
             placeholder="Enter your email"
-            class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500"
+            class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500 disabled:bg-gray-100"
           />
+          <span v-if="errors.email !== ''" class="text-xs text-red-500">{{
+            errors.email
+          }}</span>
         </div>
         <div class="my-2">
           <label class="font-semibold text-sm">Password </label>
           <input
-            placeholder="Enter your password"
             type="password"
-            class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500"
+            ref="password"
+            :disabled="isSubmitting"
+            v-model="state.password"
+            placeholder="Enter your password"
+            class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500 disabled:bg-gray-100"
           />
+          <span v-if="errors.password !== ''" class="text-xs text-red-500">{{
+            errors.password
+          }}</span>
         </div>
         <div class="my-2">
           <label class="font-semibold text-sm">Re-enter password </label>
           <input
-            placeholder="Re-enter your password"
             type="password"
-            class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500"
+            ref="password2"
+            :disabled="isSubmitting"
+            v-model="state.password2"
+            placeholder="Re-enter your password"
+            class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500 disabled:bg-gray-100"
           />
+          <span v-if="errors.password2 !== ''" class="text-xs text-red-500">{{
+            errors.password2
+          }}</span>
         </div>
         <v-btn
+          :loading="isSubmitting"
+          @click="handleSignUp"
           :elevation="0"
           class="!bg-imdb-gold block w-full !normal-case my-3 !rounded-lg shadow-lg !text-sm"
         >
@@ -86,5 +112,75 @@
 </template>
 <script lang="ts">
 import { RouterLink } from "vue-router";
-export default {};
+import { defineComponent } from "vue";
+import { BACKEND_URL } from "../../constants";
+import axios from "axios";
+
+interface IState {
+  [key: string]: string;
+}
+const initialState: IState = {
+  names: "",
+  email: "",
+  password: "",
+  password2: "",
+};
+
+export default defineComponent({
+  data() {
+    return {
+      state: { ...initialState },
+      errors: { ...initialState },
+      isSubmitting: false,
+    };
+  },
+  methods: {
+    handleSignUp() {
+      let isEmpty = false;
+      this.errors = { ...initialState };
+      const stateAttributes = Object.keys(this.state);
+
+      for (let i = 0; i < stateAttributes.length; i++) {
+        const attribute = stateAttributes[i];
+
+        if (this.state[attribute].trim() === "") {
+          this.errors[attribute] = attribute + " can not be empty";
+          //@ts-ignore
+          this.$refs[attribute].focus();
+          isEmpty = true;
+          break;
+        }
+      }
+
+      if (isEmpty) return;
+
+      if (this.state.password.length < 5) {
+        this.errors.password = "Password can not be less than 5 characters";
+        return;
+      } else {
+        this.errors.password = "";
+      }
+
+      if (this.state.password2 !== this.state.password) {
+        this.errors.password2 = "Passwords do not match";
+        return;
+      } else {
+        this.errors.password2 = "";
+      }
+
+      //submit the form
+      this.isSubmitting = true;
+      axios
+        .post(BACKEND_URL + "/auth/signup", this.state)
+        .then((res) => {
+          this.isSubmitting = false;
+          console.log({ data: res.data });
+        })
+        .catch((error) => {
+          this.isSubmitting = false;
+          console.log({ error });
+        });
+    },
+  },
+});
 </script>
