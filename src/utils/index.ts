@@ -28,7 +28,7 @@ export const toastMessage = (type: TToastType, message: string) => {
 export const errorHandler = (error: unknown) => {
   if (error instanceof AxiosError) {
     if (error.response) {
-      toastMessage("error", error.response.data?.message);
+      toastMessage("error", error.response.data?.message || error.message);
     } else {
       toastMessage("error", error.message);
     }
