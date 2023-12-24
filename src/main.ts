@@ -30,7 +30,7 @@ const vuetify = createVuetify({
 const app = createApp(App);
 
 app.use(vuetify);
-// app.use(createPinia()); //withou persistance
+// app.use(createPinia()); //without persistance
 app.use(createPinia().use(piniaPluginPersistedState)); //with persistance
 app.use(router);
 app.use(ToastPlugin);

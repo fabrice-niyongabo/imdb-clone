@@ -10,6 +10,10 @@ import Fan from "../views/Fan/index.vue";
 import Upcoming from "../views/Upcoming/index.vue";
 import ImdbLogin from "../views/ImdbLogin/index.vue";
 
+import { useUserStore } from "../stores/user";
+
+//here we dont have access to pinia
+//because it is not finished being initialized
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -36,12 +40,30 @@ const router = createRouter({
     {
       path: "/login",
       name: "login",
-      component: Login,
+      component: () => Login,
+      beforeEnter: (to, from, next) => {
+        //user store => here we have access to the store bcz pinia has loaded
+        const userStore = useUserStore();
+        if (userStore.token.trim() !== "") {
+          next({ name: "home" }); // go to home page if we are already logged in
+        } else {
+          next(); // continue to login page
+        }
+      },
     },
     {
       path: "/register",
       name: "register",
-      component: Register,
+      component: () => Register,
+      beforeEnter: (_, __, next) => {
+        //user store => here we have access to the store bcz pinia has loaded
+        const userStore = useUserStore();
+        if (userStore.token.trim() !== "") {
+          next({ name: "home" });
+        } else {
+          next();
+        }
+      },
     },
     {
       path: "/toppicks",
@@ -61,7 +83,16 @@ const router = createRouter({
     {
       path: "/imdb-login",
       name: "imdb-login",
-      component: ImdbLogin,
+      component: () => ImdbLogin,
+      beforeEnter: (_, __, next) => {
+        //user store => here we have access to the store bcz pinia has loaded
+        const userStore = useUserStore();
+        if (userStore.token.trim() !== "") {
+          next({ name: "home" });
+        } else {
+          next();
+        }
+      },
     },
   ],
 });
