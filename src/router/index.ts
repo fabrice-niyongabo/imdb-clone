@@ -40,7 +40,7 @@ const router = createRouter({
     {
       path: "/login",
       name: "login",
-      component: () => Login,
+      component: Login,
       beforeEnter: (to, from, next) => {
         //user store => here we have access to the store bcz pinia has loaded
         const userStore = useUserStore();
@@ -54,7 +54,7 @@ const router = createRouter({
     {
       path: "/register",
       name: "register",
-      component: () => Register,
+      component: Register,
       beforeEnter: (_, __, next) => {
         //user store => here we have access to the store bcz pinia has loaded
         const userStore = useUserStore();
@@ -83,7 +83,7 @@ const router = createRouter({
     {
       path: "/imdb-login",
       name: "imdb-login",
-      component: () => ImdbLogin,
+      component: ImdbLogin,
       beforeEnter: (_, __, next) => {
         //user store => here we have access to the store bcz pinia has loaded
         const userStore = useUserStore();

@@ -35,70 +35,77 @@
       <div class="mt-5 border p-5 rounded-md w-[80%] md:w-[35%]">
         <div v-if="!isAccountCreated">
           <h2 class="text-2xl font-semibold mb-5">Create Account</h2>
-          <div class="my-2">
-            <label class="font-semibold text-sm">Full Name</label>
-            <input
-              ref="names"
-              type="text"
-              :disabled="isSubmitting"
-              v-model="state.names"
-              placeholder="Enter your name"
-              class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500 disabled:bg-gray-100"
-            />
-            <span v-if="errors.names !== ''" class="text-xs text-red-500">{{
-              errors.names
-            }}</span>
-          </div>
-          <div class="my-2">
-            <label class="font-semibold text-sm">Email</label>
-            <input
-              type="text"
-              ref="email"
-              :disabled="isSubmitting"
-              v-model="state.email"
-              placeholder="Enter your email"
-              class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500 disabled:bg-gray-100"
-            />
-            <span v-if="errors.email !== ''" class="text-xs text-red-500">{{
-              errors.email
-            }}</span>
-          </div>
-          <div class="my-2">
-            <label class="font-semibold text-sm">Password </label>
-            <input
-              type="password"
-              ref="password"
-              :disabled="isSubmitting"
-              v-model="state.password"
-              placeholder="Enter your password"
-              class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500 disabled:bg-gray-100"
-            />
-            <span v-if="errors.password !== ''" class="text-xs text-red-500">{{
-              errors.password
-            }}</span>
-          </div>
-          <div class="my-2">
-            <label class="font-semibold text-sm">Re-enter password </label>
-            <input
-              type="password"
-              ref="password2"
-              :disabled="isSubmitting"
-              v-model="state.password2"
-              placeholder="Re-enter your password"
-              class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500 disabled:bg-gray-100"
-            />
-            <span v-if="errors.password2 !== ''" class="text-xs text-red-500">{{
-              errors.password2
-            }}</span>
-          </div>
-          <v-btn
-            :loading="isSubmitting"
-            @click="handleSignUp"
-            :elevation="0"
-            class="!bg-imdb-gold block w-full !normal-case my-3 !rounded-lg shadow-lg !text-sm"
-          >
-            Create Account
-          </v-btn>
+          <form @submit.prevent="handleSignUp">
+            <div class="my-2">
+              <label class="font-semibold text-sm">Full Name</label>
+              <input
+                ref="names"
+                type="text"
+                :disabled="isSubmitting"
+                v-model="state.names"
+                placeholder="Enter your name"
+                class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500 disabled:bg-gray-100"
+              />
+              <span v-if="errors.names !== ''" class="text-xs text-red-500">{{
+                errors.names
+              }}</span>
+            </div>
+            <div class="my-2">
+              <label class="font-semibold text-sm">Email</label>
+              <input
+                type="text"
+                ref="email"
+                :disabled="isSubmitting"
+                v-model="state.email"
+                placeholder="Enter your email"
+                class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500 disabled:bg-gray-100"
+              />
+              <span v-if="errors.email !== ''" class="text-xs text-red-500">{{
+                errors.email
+              }}</span>
+            </div>
+            <div class="my-2">
+              <label class="font-semibold text-sm">Password </label>
+              <input
+                type="password"
+                ref="password"
+                :disabled="isSubmitting"
+                v-model="state.password"
+                placeholder="Enter your password"
+                class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500 disabled:bg-gray-100"
+              />
+              <span
+                v-if="errors.password !== ''"
+                class="text-xs text-red-500"
+                >{{ errors.password }}</span
+              >
+            </div>
+            <div class="my-2">
+              <label class="font-semibold text-sm">Re-enter password </label>
+              <input
+                type="password"
+                ref="password2"
+                :disabled="isSubmitting"
+                v-model="state.password2"
+                placeholder="Re-enter your password"
+                class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500 disabled:bg-gray-100"
+              />
+              <span
+                v-if="errors.password2 !== ''"
+                class="text-xs text-red-500"
+                >{{ errors.password2 }}</span
+              >
+            </div>
+            <v-btn
+              type="submit"
+              :loading="isSubmitting"
+              @click="handleSignUp"
+              :elevation="0"
+              class="!bg-imdb-gold block w-full !normal-case my-3 !rounded-lg shadow-lg !text-sm"
+            >
+              Create Account
+            </v-btn>
+          </form>
 
           <div class="relative mt-10 mb-3">
             <p class="border-b h-[10px]">&nbsp;</p>
