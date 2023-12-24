@@ -34,36 +34,51 @@
       </RouterLink>
       <div class="mt-5 border p-5 rounded-md w-[80%] md:w-[35%]">
         <h2 class="text-2xl font-semibold mb-5">Sign in</h2>
-        <div class="my-2">
-          <label class="font-semibold text-sm">Email </label>
-          <input
-            type="text"
-            class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500"
-          />
-        </div>
-        <div class="my-2">
-          <div class="flex items-start justify-between mb-[2px]">
-            <label class="font-semibold text-sm">Password </label>
-            <RouterLink to="#" class="text-imdb-blue text-sm"
-              >Forgot your password?</RouterLink
-            >
+        <form @submit.prevent="handleSubmit">
+          <div class="my-2">
+            <label class="font-semibold text-sm">Email </label>
+            <input
+              type="email"
+              required
+              v-model="email"
+              :disabled="isSubmitting"
+              placeholder="Enter your email"
+              class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500 disabled:bg-gray-100"
+            />
           </div>
-          <input
-            type="password"
-            class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500"
-          />
-        </div>
-        <v-btn
-          :elevation="0"
-          class="!bg-imdb-gold block w-full !normal-case my-3 !rounded-lg shadow-lg !text-sm"
-        >
-          Sing in
-        </v-btn>
-        <div class="flex items-center justify-between gap-2">
-          <input type="checkbox" />
-          <span class="flex-1 block text-sm">Keep me signed in</span>
-        </div>
-        <div class="relative mt-10 mb-3">
+          <div class="my-2">
+            <div class="flex items-start justify-between mb-[2px]">
+              <label class="font-semibold text-sm">Password </label>
+              <RouterLink to="#" class="text-imdb-blue text-sm"
+                >Forgot your password?</RouterLink
+              >
+            </div>
+            <input
+              type="password"
+              required
+              v-model="password"
+              :disabled="isSubmitting"
+              placeholder="Enter your password"
+              class="border rounded-md outline-none w-full block p-2 text-xs focus:!border-imdb-gold transition-all duration-500 disabled:bg-gray-100"
+            />
+          </div>
+          <v-btn
+            type="submit"
+            :loading="isSubmitting"
+            :elevation="0"
+            class="!bg-imdb-gold block w-full !normal-case my-3 !rounded-lg shadow-lg !text-sm"
+          >
+            Sing in
+          </v-btn>
+          <div
+            class="flex items-center justify-between gap-2 cursor-pointer select-none w-max"
+            @click="togglePersitUserInfo"
+          >
+            <input type="checkbox" :checked="persitUserInfo" />
+            <span class="flex-1 block text-sm">Keep me signed in</span>
+          </div>
+        </form>
+        <div class="relative mt-10 mb-3 select-none">
           <p class="border-b h-[10px]">&nbsp;</p>
           <p class="absolute top-0 left-0 right-0 text-center -mt-[4px]">
             <span class="bg-white px-3 text-xs text-gray-400"
@@ -83,7 +98,50 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-import { RouterLink } from "vue-router";
-export default {};
+
+<script lang="ts" setup>
+import { BACKEND_URL } from "@/constants";
+import { errorHandler, toastMessage } from "@/utils";
+import axios from "axios";
+import { ref } from "vue";
+import { useUserStore } from "../../stores/user";
+
+//user store
+const userStore = useUserStore();
+
+// reactive state
+const email = ref("");
+const password = ref("");
+const persitUserInfo = ref(false);
+const isSubmitting = ref(false);
+
+const togglePersitUserInfo = () => {
+  persitUserInfo.value = !persitUserInfo.value;
+};
+
+const handleSubmit = () => {
+  if (email.value === "" || password.value === "") {
+    toastMessage("error", "All fields are required");
+    return;
+  }
+
+  isSubmitting.value = true;
+  axios
+    .post(BACKEND_URL + "/auth/signin", {
+      email: email.value,
+      password: password.value,
+    })
+    .then((res) => {
+      isSubmitting.value = false;
+      toastMessage("success", "Logged in successfull!");
+      const { token, refreshToken, userDetails } = res.data;
+      if (token && refreshToken && userDetails) {
+        userStore.setUser({ token, userDetails, refreshToken });
+      }
+    })
+    .catch((error) => {
+      isSubmitting.value = false;
+      errorHandler(error);
+    });
+};
 </script>

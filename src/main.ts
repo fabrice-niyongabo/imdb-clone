@@ -19,6 +19,9 @@ import "@mdi/font/css/materialdesignicons.css";
 import ToastPlugin from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-bootstrap.css";
 
+//persit pinia state
+import piniaPluginPersistedState from "pinia-plugin-persistedstate";
+
 const vuetify = createVuetify({
   components,
   directives,
@@ -27,7 +30,8 @@ const vuetify = createVuetify({
 const app = createApp(App);
 
 app.use(vuetify);
-app.use(createPinia());
+// app.use(createPinia()); //withou persistance
+app.use(createPinia().use(piniaPluginPersistedState)); //with persistance
 app.use(router);
 app.use(ToastPlugin);
 

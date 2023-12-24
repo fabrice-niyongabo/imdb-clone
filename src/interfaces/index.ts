@@ -233,3 +233,16 @@ export interface ISearchResult {
 }
 
 export type TToastType = "success" | "error" | "info" | "warning";
+
+export type TRole = "ADMIN" | "USER";
+
+export interface IUserStore {
+  token: string;
+  refreshToken: string;
+  userDetails: {
+    id: number | null;
+    names: string;
+    email: string;
+    role: TRole | null;
+  };
+}
