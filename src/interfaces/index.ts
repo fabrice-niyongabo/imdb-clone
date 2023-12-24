@@ -222,7 +222,7 @@ export interface ISearchResult {
   overview: string;
   poster_path: string;
   profile_path: string;
-  media_type: "tv" | "movie" | "tv" | "keyword" | "company" | "person";
+  media_type: "tv" | "movie" | "keyword" | "company" | "person";
   genre_ids: number[];
   popularity: number;
   first_air_date: string;
@@ -231,3 +231,5 @@ export interface ISearchResult {
   vote_count: number;
   origin_country: string[];
 }
+
+export type TToastType = "success" | "error" | "info" | "warning";

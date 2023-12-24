@@ -115,6 +115,7 @@ import { RouterLink } from "vue-router";
 import { defineComponent } from "vue";
 import { BACKEND_URL } from "../../constants";
 import axios from "axios";
+import { isValidEmail, toastMessage } from "@/utils";
 
 interface IState {
   [key: string]: string;
@@ -153,6 +154,13 @@ export default defineComponent({
       }
 
       if (isEmpty) return;
+
+      if (!isValidEmail(this.state.email)) {
+        this.errors.email = "Invalid email address";
+        //@ts-ignore
+        this.$refs.email.focus();
+        return;
+      }
 
       if (this.state.password.length < 5) {
         this.errors.password = "Password can not be less than 5 characters";
