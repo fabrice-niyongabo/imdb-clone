@@ -3,55 +3,60 @@
     rounded="0"
     variant="text"
     color="white"
-    class="rounded-l-md !capitalize !p-0"
+    class="rounded-l-md !capitalize !py-0"
   >
-    EN
-    <v-icon v-if="showLanguages" icon="mdi-menu-up" size="x-large" />
-    <v-icon v-if="!showLanguages" icon="mdi-menu-down" size="x-large" />
+    <div class="flex items-center justify-center gap-1">
+      <v-icon icon="mdi-account-circle" size="large" />
+      <span> {{ userStore.userDetails.names.split(" ")[0] }}</span>
+      <span>
+        <v-icon v-if="showLanguages" icon="mdi-menu-up" size="x-large" />
+        <v-icon v-if="!showLanguages" icon="mdi-menu-down" size="x-large" />
+      </span>
+    </div>
 
     <v-menu activator="parent">
       <v-list
         class="mt-3 !bg-[#121212]"
-        @vue:before-unmount="handleLanguesMenuClick()"
-        @vue:before-mount="handleLanguesMenuClick()"
+        @vue:before-unmount="handleMenuClick()"
+        @vue:before-mount="handleMenuClick()"
       >
-        <v-list-item>
-          <v-list-item-title class="text-gray-200 !uppercase !text-xs"
-            >fully supported
-          </v-list-item-title>
-        </v-list-item>
-        <v-divider />
-        <v-list-item class="hover:bg-[#252525] !text-sm">
+        <v-list-item @click="router.push('#')">
           <v-list-item-title
-            class="text-gray-200 transition-all duration-100 hover:text-white !text-xs"
+            class="text-gray-200 !capitalize !text-xs cursor-pointer hover:text-imdb-gold"
           >
-            <div class="flex items-center justify-between gap-2">
-              <v-icon icon="mdi-circle-double" color="#F5C518" />
-              <span class="flex-1">EN</span>
-            </div>
+            Your activity
           </v-list-item-title>
         </v-list-item>
         <v-divider />
         <v-list-item>
-          <v-list-item-title class="text-gray-200 !text-xs !uppercase"
-            >Partially supported
+          <v-list-item-title
+            class="text-gray-200 !capitalize !text-xs cursor-pointer hover:text-imdb-gold"
+          >
+            Your watchlist
           </v-list-item-title>
         </v-list-item>
         <v-divider />
-        <v-list-item class="hover:bg-[#252525] !text-sm">
-          <v-list-item-title class="text-gray-200 !text-xs">
-            <div class="flex items-center justify-between gap-2">
-              <v-icon icon="mdi-circle-outline" />
-              <span class="flex-1">French</span>
-            </div>
+        <v-list-item>
+          <v-list-item-title
+            class="text-gray-200 !capitalize !text-xs cursor-pointer hover:text-imdb-gold"
+          >
+            Your ratings
           </v-list-item-title>
         </v-list-item>
-        <v-list-item class="hover:bg-[#252525] !text-sm">
-          <v-list-item-title class="text-gray-200 !text-xs">
-            <div class="flex items-center justify-between gap-2">
-              <v-icon icon="mdi-circle-outline" />
-              <span class="flex-1">Kinyarwanda</span>
-            </div>
+        <v-divider />
+        <v-list-item>
+          <v-list-item-title
+            class="text-gray-200 !capitalize !text-xs cursor-pointer hover:text-imdb-gold"
+          >
+            Account settings
+          </v-list-item-title>
+        </v-list-item>
+        <v-divider />
+        <v-list-item @click="handleSignout">
+          <v-list-item-title
+            class="text-gray-200 !capitalize !text-xs cursor-pointer hover:text-imdb-gold"
+          >
+            Sign out
           </v-list-item-title>
         </v-list-item>
       </v-list>
@@ -61,10 +66,21 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useUserStore } from "../../../stores/user";
+//user store
+const userStore = useUserStore();
+const router = useRouter();
 
+//state
 const showLanguages = ref(false);
 
-const handleLanguesMenuClick = () => {
+const handleMenuClick = () => {
   showLanguages.value = !showLanguages.value;
+};
+
+const handleSignout = () => {
+  userStore.resetUser();
+  router.replace("/login");
 };
 </script>
