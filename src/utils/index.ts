@@ -3,6 +3,7 @@ import type { TToastType } from "@/interfaces";
 import { useUserStore } from "@/stores/user";
 import axios, { AxiosError } from "axios";
 import { useToast } from "vue-toast-notification";
+import { useRouter } from "vue-router";
 
 export const isValidEmail = (email: string): boolean => {
   const pattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
@@ -55,13 +56,14 @@ export const errorHandler = (error: unknown) => {
 
     //handling unauthorized case
     if (error.status === 401) {
+      const router = useRouter();
       const userStore = useUserStore();
       const currentPath = window.location.pathname.replace("/", "");
 
       userStore.resetUser();
 
       //go to login page
-      window.location.replace("/login?redirect=" + currentPath);
+      router.push("/login?redirect=" + currentPath);
     }
   } else if (error instanceof Error) {
     toastMessage("error", error.message);

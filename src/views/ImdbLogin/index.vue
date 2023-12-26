@@ -104,10 +104,13 @@ import { BACKEND_URL } from "@/constants";
 import { errorHandler, toastMessage } from "@/utils";
 import axios from "axios";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { useUserStore } from "../../stores/user";
 
 //user store
 const userStore = useUserStore();
+
+const router = useRouter();
 
 // reactive state
 const email = ref("");
@@ -142,6 +145,7 @@ const handleSubmit = () => {
           refreshToken,
           keepSignedIn: persitUserInfo.value,
         });
+        router.push("/");
       }
     })
     .catch((error) => {
