@@ -239,6 +239,7 @@ export type TRole = "ADMIN" | "USER";
 export interface IUserStore {
   token: string;
   refreshToken: string;
+  keepSignedIn: boolean;
   userDetails: {
     id: number | null;
     names: string;

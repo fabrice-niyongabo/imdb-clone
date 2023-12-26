@@ -136,7 +136,12 @@ const handleSubmit = () => {
       toastMessage("success", "Logged in successfull!");
       const { token, refreshToken, userDetails } = res.data;
       if (token && refreshToken && userDetails) {
-        userStore.setUser({ token, userDetails, refreshToken });
+        userStore.setUser({
+          token,
+          userDetails,
+          refreshToken,
+          keepSignedIn: persitUserInfo.value,
+        });
       }
     })
     .catch((error) => {

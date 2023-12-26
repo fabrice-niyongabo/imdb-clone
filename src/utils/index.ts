@@ -1,5 +1,7 @@
+import { BACKEND_URL } from "@/constants";
 import type { TToastType } from "@/interfaces";
-import { AxiosError } from "axios";
+import { useUserStore } from "@/stores/user";
+import axios, { AxiosError } from "axios";
 import { useToast } from "vue-toast-notification";
 
 export const isValidEmail = (email: string): boolean => {
@@ -25,12 +27,41 @@ export const toastMessage = (type: TToastType, message: string) => {
   }
 };
 
+export const getNewRefreshToken = () => {
+  const userStore = useUserStore();
+  const { token, keepSignedIn } = userStore;
+  if (keepSignedIn && token.trim() !== "") {
+    axios
+      .post(BACKEND_URL + "/auth/refresh", { token })
+      .then((res) => {
+        const { refreshToken, token } = res.data;
+        userStore.setUser({
+          ...userStore.$state,
+          token,
+          refreshToken,
+        });
+      })
+      .catch((error) => {});
+  }
+};
+
 export const errorHandler = (error: unknown) => {
   if (error instanceof AxiosError) {
     if (error.response) {
       toastMessage("error", error.response.data?.message || error.message);
     } else {
       toastMessage("error", error.message);
+    }
+
+    //handling unauthorized case
+    if (error.status === 401) {
+      const userStore = useUserStore();
+      const currentPath = window.location.pathname.replace("/", "");
+
+      userStore.resetUser();
+
+      //go to login page
+      window.location.replace("/login?redirect=" + currentPath);
     }
   } else if (error instanceof Error) {
     toastMessage("error", error.message);
