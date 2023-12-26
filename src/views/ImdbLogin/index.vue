@@ -115,7 +115,7 @@ const router = useRouter();
 // reactive state
 const email = ref("");
 const password = ref("");
-const persitUserInfo = ref(false);
+const persitUserInfo = ref(true);
 const isSubmitting = ref(false);
 
 const togglePersitUserInfo = () => {

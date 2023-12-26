@@ -77,7 +77,7 @@
         prepend-icon="mdi-bookmark-plus"
         >Watchlist</v-btn
       >
-      <RouterLink to="/login">
+      <RouterLink to="/login" v-if="userStore.token.trim() === ''">
         <v-btn
           elevation="0"
           color="#121212"
@@ -85,18 +85,18 @@
           >sign in</v-btn
         >
       </RouterLink>
+      <LoggedInUser v-else />
       <Languages />
     </nav>
   </header>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
 import Menu from "./Menu/Menu.vue";
 import Search from "./Search/Search.vue";
 import Languages from "./Languages/Languages.vue";
+import LoggedInUser from "./LoggedInUser/index.vue";
+import { useUserStore } from "@/stores/user";
 
-export default defineComponent({
-  components: { Menu, Search, Languages },
-});
+const userStore = useUserStore();
 </script>
