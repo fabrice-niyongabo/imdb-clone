@@ -92,6 +92,7 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from "vue";
 import Menu from "./Menu/Menu.vue";
 import Search from "./Search/Search.vue";
 import Languages from "./Languages/Languages.vue";

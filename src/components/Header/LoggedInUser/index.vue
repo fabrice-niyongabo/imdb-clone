@@ -52,7 +52,7 @@
           </v-list-item-title>
         </v-list-item>
         <v-divider />
-        <v-list-item @click="handleSignout">
+        <v-list-item @click="setShowAlert(true)">
           <v-list-item-title
             class="text-gray-200 !capitalize !text-xs cursor-pointer hover:text-imdb-gold"
           >
@@ -62,18 +62,32 @@
       </v-list>
     </v-menu>
   </v-btn>
+
+  <Confirmation
+    :show-alert="showAlert"
+    :set-show-alert="setShowAlert"
+    message="Do you want to sign out now?"
+    :callback-fn="handleSignout"
+  />
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../../../stores/user";
+
+import Confirmation from "../../Confirmation/index.vue";
 //user store
 const userStore = useUserStore();
 const router = useRouter();
 
 //state
 const showLanguages = ref(false);
+const showAlert = ref(false);
+
+const setShowAlert = (value: boolean) => {
+  showAlert.value = value;
+};
 
 const handleMenuClick = () => {
   showLanguages.value = !showLanguages.value;
