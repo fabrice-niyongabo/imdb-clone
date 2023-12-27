@@ -133,6 +133,7 @@ import axios from "axios";
 import { useUserStore } from "@/stores/user";
 import { useWatchlistStore } from "@/stores/watchlist";
 import { errorHandler } from "@/utils";
+import { toastMessage } from "../../../../../utils";
 
 const props = defineProps({
   movie: { type: Object as PropType<ITopPickMovie>, required: true },
@@ -171,6 +172,8 @@ const addToWatchlist = () => {
     })
     .then((res) => {
       isLoading.value = false;
+      watchlistStore.addToWatchList(res.data);
+      toastMessage("success", "Movie added to your watchlist!");
     })
     .catch((error) => {
       isLoading.value = false;
