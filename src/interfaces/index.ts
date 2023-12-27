@@ -255,7 +255,7 @@ export interface IWatchlist {
   title: string;
   backdrop_path: string;
   poster_path: string;
-  movie_type: string;
+  movie_type: "movie" | "tv";
   release_date: string;
   overview: string;
 }

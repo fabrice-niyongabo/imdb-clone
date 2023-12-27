@@ -20,6 +20,8 @@
       <h3 class="line-clamp-1" :title="movie.name">{{ movie.name }}</h3>
       <div class="my-3">
         <v-btn
+          :loading="isLoading"
+          @click="addToWatchlist"
           variant="text"
           class="w-full !p-0 !normal-case !text-imdb-blue !bg-imdb-light-black"
         >
@@ -29,10 +31,12 @@
       </div>
       <div class="flex items-center justify-between gap-2">
         <v-btn size="small" variant="text" class="!p-0 !normal-case">
-          <div class="px-[5px]">
-            <v-icon icon="mdi-play" />
-            <span>Trailer</span>
-          </div>
+          <RouterLink :to="'/tv/' + movie.id">
+            <div class="px-[5px]">
+              <v-icon icon="mdi-play" />
+              <span>Trailer</span>
+            </div>
+          </RouterLink>
         </v-btn>
         <v-btn
           size="small"
@@ -118,28 +122,59 @@
     </div>
   </v-dialog>
 </template>
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { defineProps, ref } from "vue";
 import type { PropType } from "vue";
-import type { ITopPickMovie } from "../../../../../interfaces";
-import { IMDB_BASE_IMAGE_PATH } from "../../../../../constants";
+import type { ITopPickMovie, IWatchlist } from "../../../../../interfaces";
+import { BACKEND_URL, IMDB_BASE_IMAGE_PATH } from "../../../../../constants";
 import SectionTitle from "../../../../../components/SectionTitle/index.vue";
 import IMDBBookmarkIcon from "../../../../../components/IMDBBookmarkIcon/index.vue";
-export default defineComponent({
-  props: {
-    movie: { type: Object as PropType<ITopPickMovie>, required: true },
-  },
-  components: { SectionTitle, IMDBBookmarkIcon },
-  data() {
-    return {
-      IMDB_BASE_IMAGE_PATH,
-      showModal: false,
-    };
-  },
-  methods: {
-    toggleModal() {
-      this.showModal = !this.showModal;
-    },
-  },
+import axios from "axios";
+import { useUserStore } from "@/stores/user";
+import { useWatchlistStore } from "@/stores/watchlist";
+import { errorHandler } from "@/utils";
+
+const props = defineProps({
+  movie: { type: Object as PropType<ITopPickMovie>, required: true },
 });
+
+//store
+const userStore = useUserStore();
+const watchlistStore = useWatchlistStore();
+
+//state
+const showModal = ref(false);
+const isLoading = ref(false);
+
+const toggleModal = () => {
+  showModal.value = !showModal.value;
+};
+
+const addToWatchlist = () => {
+  isLoading.value = true;
+  const movieRequest: IWatchlist = {
+    id: 0,
+    movieId: props.movie.id,
+    backdrop_path: props.movie.backdrop_path,
+    movie_type: "tv",
+    overview: props.movie.overview,
+    poster_path: props.movie.poster_path,
+    release_date: props.movie.first_air_date,
+    title: props.movie.name,
+    userId: 0,
+  };
+  axios
+    .post(BACKEND_URL + "/watchlist", movieRequest, {
+      headers: {
+        Authorization: `Bearer ${userStore.token}`,
+      },
+    })
+    .then((res) => {
+      isLoading.value = false;
+    })
+    .catch((error) => {
+      isLoading.value = false;
+      errorHandler(error);
+    });
+};
 </script>
