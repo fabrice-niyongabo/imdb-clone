@@ -76,7 +76,13 @@
         class="hover:cursor-pointer hover:bg-[#252525] !capitalize"
         prepend-icon="mdi-bookmark-plus"
         @click="goToWatchlist"
-        >Watchlist</v-btn
+      >
+        <span>Watchlist</span>
+        <span
+          v-if="watchlistStore.watchlist.length > 0"
+          class="text-[10px] bg-imdb-gold rounded-md px-1 py-[2px] text-center ml-1"
+          >{{ watchlistStore.watchlist.length }}</span
+        ></v-btn
       >
       <RouterLink to="/login" v-if="userStore.token.trim() === ''">
         <v-btn
@@ -99,9 +105,11 @@ import Search from "./Search/Search.vue";
 import Languages from "./Languages/Languages.vue";
 import LoggedInUser from "./LoggedInUser/index.vue";
 import { useUserStore } from "@/stores/user";
+import { useWatchlistStore } from "@/stores/watchlist";
 
 const router = useRouter();
 const userStore = useUserStore();
+const watchlistStore = useWatchlistStore();
 
 const goToWatchlist = () => {
   if (userStore.token.trim() === "") {

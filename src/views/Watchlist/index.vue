@@ -48,6 +48,9 @@
         </div>
       </div>
       <div class="bg-white p-5">
+        <div v-if="!watchlistStore.isLoading">
+          <div></div>
+        </div>
         <Loader v-if="watchlistStore.isLoading" />
         <p
           class="text-center"
