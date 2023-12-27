@@ -30,7 +30,7 @@
           class="px-5 py-2 border-t border-b flex items-center justify-between gap-2 text-imdb-gray-text"
         >
           <div class="flex-1">
-            <span>0 Titles</span>
+            <span>{{ watchlistStore.watchlist.length }} Titles</span>
           </div>
           <div class="flex items-center justify-between gap-2">
             <div class="flex items-center justify-center gap-2">
@@ -47,13 +47,24 @@
           </div>
         </div>
       </div>
-      <div class="bg-white p-5">test</div>
+      <div class="bg-white p-5">
+        <Loader v-if="watchlistStore.isLoading" />
+        <p
+          class="text-center"
+          v-if="
+            watchlistStore.watchlist.length === 0 && !watchlistStore.isLoading
+          "
+        >
+          Your watchlist is empty.
+        </p>
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { onMounted } from "vue";
 import { useWatchlistStore } from "../../stores/watchlist";
+import Loader from "./Loader/index.vue";
 
 const watchlistStore = useWatchlistStore();
 

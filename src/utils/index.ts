@@ -42,7 +42,17 @@ export const getNewRefreshToken = () => {
           refreshToken,
         });
       })
-      .catch((error) => {});
+      .catch((error) => {
+        if (error instanceof AxiosError && error.status === 401) {
+          const router = useRouter();
+          const userStore = useUserStore();
+          const currentPath = window.location.pathname.replace("/", "");
+
+          userStore.resetUser();
+          //go to login page
+          router.push("/login?redirect=" + currentPath);
+        }
+      });
   }
 };
 
