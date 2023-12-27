@@ -9,6 +9,7 @@ import TopPicks from "../views/TopPicks/index.vue";
 import Fan from "../views/Fan/index.vue";
 import Upcoming from "../views/Upcoming/index.vue";
 import ImdbLogin from "../views/ImdbLogin/index.vue";
+import Watchlist from "../views/Watchlist/index.vue";
 
 import { useUserStore } from "../stores/user";
 
@@ -89,6 +90,19 @@ const router = createRouter({
         const userStore = useUserStore();
         if (userStore.token.trim() !== "") {
           next({ name: "home" });
+        } else {
+          next();
+        }
+      },
+    },
+    {
+      path: "/watchlist",
+      name: "watchlist",
+      component: Watchlist,
+      beforeEnter: (_, __, next) => {
+        const userStore = useUserStore();
+        if (userStore.token.trim() === "") {
+          next({ name: "login" });
         } else {
           next();
         }

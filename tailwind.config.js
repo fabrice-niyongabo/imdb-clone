@@ -14,6 +14,7 @@ module.exports = {
       "imdb-light-black": "#252525",
       "imdb-light-blue-bg": "#313131",
       "imdb-search-bg": "#222222",
+      "imdb-gray-text": "#6d6d6d",
     },
   },
   plugins: [],

@@ -247,3 +247,15 @@ export interface IUserStore {
     role: TRole | null;
   };
 }
+
+export interface IWatchlist {
+  id: number;
+  userId: number;
+  movieId: number;
+  title: string;
+  backdrop_path: string;
+  poster_path: string;
+  movie_type: string;
+  release_date: string;
+  overview: string;
+}

@@ -75,6 +75,7 @@
         color="#121212"
         class="hover:cursor-pointer hover:bg-[#252525] !capitalize"
         prepend-icon="mdi-bookmark-plus"
+        @click="goToWatchlist"
         >Watchlist</v-btn
       >
       <RouterLink to="/login" v-if="userStore.token.trim() === ''">
@@ -92,12 +93,21 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { useRouter } from "vue-router";
 import Menu from "./Menu/Menu.vue";
 import Search from "./Search/Search.vue";
 import Languages from "./Languages/Languages.vue";
 import LoggedInUser from "./LoggedInUser/index.vue";
 import { useUserStore } from "@/stores/user";
 
+const router = useRouter();
 const userStore = useUserStore();
+
+const goToWatchlist = () => {
+  if (userStore.token.trim() === "") {
+    router.push("/login");
+  } else {
+    router.push("/watchlist");
+  }
+};
 </script>
