@@ -1,10 +1,12 @@
 <template>
   <div class="bg-imdb-black">
-    <img
-      :src="IMDB_BASE_IMAGE_PATH + movie.backdrop_path"
-      :alt="movie.title"
-      class="h-[240px] w-full"
-    />
+    <RouterLink :to="'/movie/' + movie.id">
+      <img
+        :src="IMDB_BASE_IMAGE_PATH + movie.backdrop_path"
+        :alt="movie.title"
+        class="h-[240px] w-full"
+      />
+    </RouterLink>
     <div class="p-3 flex items-start justify-between gap-2">
       <IMDBBookmarkIcon
         bg-color="#252525"
