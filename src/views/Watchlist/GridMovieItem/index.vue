@@ -14,7 +14,7 @@
           :alt="movie.title"
         />
       </RouterLink>
-      <div class="absolute top-0 left-0 z-[10]">
+      <div class="absolute top-0 left-0 z-[1]">
         <IMDBBookmarkedIcon
           bg-color="#94c34d"
           hover-bg="#b1e967"

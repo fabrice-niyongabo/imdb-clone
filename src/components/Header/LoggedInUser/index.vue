@@ -20,13 +20,6 @@
         @vue:before-unmount="handleMenuClick()"
         @vue:before-mount="handleMenuClick()"
       >
-        <v-list-item @click="router.push('#')">
-          <v-list-item-title
-            class="text-gray-200 !capitalize !text-xs cursor-pointer hover:text-imdb-gold"
-          >
-            Your activity
-          </v-list-item-title>
-        </v-list-item>
         <v-divider />
         <v-list-item @click="router.push('/watchlist')">
           <v-list-item-title

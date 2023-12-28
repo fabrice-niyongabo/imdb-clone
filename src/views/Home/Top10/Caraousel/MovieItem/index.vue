@@ -3,7 +3,7 @@
     <router-link :to="'/movie/' + movie.id">
       <img
         :src="IMDB_BASE_IMAGE_PATH + movie.poster_path"
-        :alt="movie.name"
+        :alt="movie.title"
         class="h-[300px] w-full"
       />
     </router-link>
@@ -35,7 +35,7 @@
         </div>
       </v-btn>
     </div>
-    <div class="absolute top-0 left-0 z-[10]">
+    <div class="absolute top-0 left-0 z-[1]">
       <IMDBBookmarkIcon
         bg-color="#121212b4"
         hover-bg="#121212d5"
