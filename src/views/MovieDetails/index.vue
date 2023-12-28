@@ -27,6 +27,7 @@ import Details from "./Details/index.vue";
 import Videos from "./Videos/index.vue";
 import Images from "./Images/index.vue";
 import RelatedMovies from "./RelatedMovies/index.vue";
+import { useRecentlyViewedStore } from "@/stores/recentlyViewed";
 
 interface IReturnData {
   movieDetails: IMovieDetails | null;
@@ -127,6 +128,20 @@ export default defineComponent({
           this.isLoadingImages = false;
           console.log({ error });
         });
+    },
+  },
+
+  watch: {
+    movieDetails() {
+      if (this.movieDetails) {
+        const recentlyViewedStore = useRecentlyViewedStore();
+        recentlyViewedStore.addToRecentlyViewed({
+          movieType: "movie",
+          movieId: this.movieDetails.id,
+          poster_path: this.movieDetails.poster_path,
+          title: this.movieDetails.title,
+        });
+      }
     },
   },
 

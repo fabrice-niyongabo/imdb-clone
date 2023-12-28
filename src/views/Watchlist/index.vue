@@ -88,6 +88,7 @@
           Your watchlist is empty.
         </p>
       </div>
+      <RecentlyViewed />
     </div>
   </div>
 </template>
@@ -97,6 +98,7 @@ import { useWatchlistStore } from "../../stores/watchlist";
 import Loader from "./Loader/index.vue";
 import ListMovieItem from "./ListMovieItem/index.vue";
 import GridMovieItem from "./GridMovieItem/index.vue";
+import RecentlyViewed from "@/components/RecentlyViewed/index.vue";
 
 const watchlistStore = useWatchlistStore();
 

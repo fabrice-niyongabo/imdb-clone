@@ -235,6 +235,7 @@ export interface ISearchResult {
 export type TToastType = "success" | "error" | "info" | "warning";
 
 export type TRole = "ADMIN" | "USER";
+export type TMovieType = "movie" | "tv";
 
 export interface IUserStore {
   token: string;
@@ -248,6 +249,16 @@ export interface IUserStore {
   };
 }
 
+export interface IRecentlyViewed {
+  title: string;
+  poster_path: string;
+  movieType: TMovieType;
+  movieId: number;
+}
+export interface IRecentlyViewedStore {
+  movies: IRecentlyViewed[];
+}
+
 export interface IWatchlist {
   id: number;
   userId: number;
@@ -255,17 +266,18 @@ export interface IWatchlist {
   title: string;
   backdrop_path: string;
   poster_path: string;
-  movie_type: "movie" | "tv";
+  movie_type: TMovieType;
   release_date: string;
   overview: string;
 }
 
+///
 export interface IWatchlistRequest {
   movieId: number;
   title: string;
   backdrop_path: string;
   poster_path: string;
-  movie_type: "movie" | "tv";
+  movie_type: TMovieType;
   release_date: string;
   overview: string;
 }

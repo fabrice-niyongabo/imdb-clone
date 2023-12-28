@@ -7,6 +7,7 @@ import { defineComponent } from "vue";
 import type { ITVDetails } from "../../interfaces";
 import { API_TOKEN } from "@/constants";
 import Details from "./Details/index.vue";
+import { useRecentlyViewedStore } from "@/stores/recentlyViewed";
 
 interface IReturnData {
   tvDetails: ITVDetails | null;
@@ -72,6 +73,19 @@ export default defineComponent({
   },
   mounted() {
     this.fetchDetails();
+  },
+  watch: {
+    tvDetails() {
+      if (this.tvDetails) {
+        const recentlyViewedStore = useRecentlyViewedStore();
+        recentlyViewedStore.addToRecentlyViewed({
+          movieType: "tv",
+          movieId: this.tvDetails.id,
+          poster_path: this.tvDetails.poster_path,
+          title: this.tvDetails.name,
+        });
+      }
+    },
   },
 });
 </script>
