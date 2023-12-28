@@ -66,7 +66,7 @@ export default defineComponent({
   },
   watch: {
     isVisible() {
-      if (this.isVisible) {
+      if (this.isVisible && this.userStore.token.trim().length > 0) {
         const store = useWatchlistStore();
         store.fetchWatchList();
       }
