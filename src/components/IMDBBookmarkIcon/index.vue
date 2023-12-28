@@ -21,7 +21,7 @@
     width:${width}`"
     @mouseover="onMouseOver()"
     @mouseout="onMouseOut()"
-    @click="!isLoading ? callBackFn() : null"
+    @click="!isLoading ? (callBackFn ? callBackFn() : null) : null"
   >
     <div
       class="absolute top-0 bottom-0 left-0 right-0 pb-2 flex items-center justify-center"
