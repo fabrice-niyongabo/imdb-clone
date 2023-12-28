@@ -1,5 +1,5 @@
 import { BACKEND_URL } from "@/constants";
-import type { IUserStore, IWatchlist } from "@/interfaces";
+import type { IWatchlist } from "@/interfaces";
 import axios from "axios";
 import { defineStore } from "pinia";
 import { useUserStore } from "./user";
