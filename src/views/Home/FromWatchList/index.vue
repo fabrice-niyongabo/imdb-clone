@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-black py-5" ref="section">
+  <section class="bg-black py-5 min-h-[50vh]" ref="section">
     <div class="container mx-auto">
       <section-title
         title="From your Watchlist"
@@ -21,7 +21,7 @@
       </div>
       <Carausel
         :movies="watchlistStore.watchlist"
-        v-if="!watchlistStore.isLoading && watchlistStore.watchlist.length > 0"
+        v-if="!watchlistStore.isLoading && userStore.token.trim().length > 0"
       />
     </div>
   </section>
