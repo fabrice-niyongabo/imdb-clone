@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-[#cececa] min-h-screen">
+  <section class="bg-[#cececa]">
     <div class="container mx-auto">
       <div class="bg-white p-5 grid grid-cols-1 md:grid-cols-2 mt-1 pb-10">
         <div>
@@ -97,6 +97,10 @@
           </div>
         </div>
       </div>
+      <RecentlyViewed />
     </div>
   </section>
 </template>
+<script setup lang="ts">
+import RecentlyViewed from "@/components/RecentlyViewed/index.vue";
+</script>
