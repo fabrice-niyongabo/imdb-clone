@@ -43,13 +43,35 @@
                 <option value="Release date">Release date</option>
               </select>
             </div>
-            <v-icon icon="mdi-grid" title="Grid view" class="cursor-pointer" />
+            <div class="cursor-pointer" @click="handleChangeDisplayMode">
+              <v-icon
+                icon="mdi-grid"
+                title="Grid view"
+                v-if="displayMode == 'List'"
+              />
+              <v-icon icon="mdi-view-list" title="List view" v-else />
+            </div>
           </div>
         </div>
       </div>
       <div class="bg-white p-5">
-        <div v-if="!watchlistStore.isLoading">
+        <div
+          v-if="!watchlistStore.isLoading"
+          :class="
+            displayMode === 'Grid'
+              ? 'grid grid-cols-2 md:grid-cols-6 gap-3'
+              : ''
+          "
+        >
           <ListMovieItem
+            v-if="displayMode === 'List'"
+            v-for="movie in watchlistStore.watchlist"
+            :key="movie.id"
+            class="mb-3"
+            :movie="movie"
+          />
+          <GridMovieItem
+            v-if="displayMode === 'Grid'"
             v-for="movie in watchlistStore.watchlist"
             :key="movie.id"
             class="mb-3"
@@ -74,11 +96,16 @@ import { onMounted, ref } from "vue";
 import { useWatchlistStore } from "../../stores/watchlist";
 import Loader from "./Loader/index.vue";
 import ListMovieItem from "./ListMovieItem/index.vue";
+import GridMovieItem from "./GridMovieItem/index.vue";
 
 const watchlistStore = useWatchlistStore();
 
 //state
-const diplayMode = ref<"Grid" | "List">("Grid");
+const displayMode = ref<"Grid" | "List">("List");
+
+const handleChangeDisplayMode = () => {
+  displayMode.value = displayMode.value === "Grid" ? "List" : "Grid";
+};
 
 onMounted(() => {
   watchlistStore.fetchWatchList();

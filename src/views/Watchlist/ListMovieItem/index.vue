@@ -1,11 +1,19 @@
 <template>
   <div class="flex items-start justify-between gap-2">
     <div class="border p-[5px] relative">
-      <img
-        class="w-[100px]"
-        :src="IMDB_BASE_IMAGE_PATH + movie.poster_path"
-        :alt="movie.title"
-      />
+      <RouterLink
+        :to="
+          movie.movie_type === 'movie'
+            ? '/movie/' + movie.movieId
+            : '/tv/' + movie.movieId
+        "
+      >
+        <img
+          class="w-[100px]"
+          :src="IMDB_BASE_IMAGE_PATH + movie.poster_path"
+          :alt="movie.title"
+        />
+      </RouterLink>
       <div class="absolute top-0 left-0 z-[10]">
         <IMDBBookmarkedIcon
           bg-color="#94c34d"
@@ -19,7 +27,15 @@
       </div>
     </div>
     <div class="flex-1">
-      <h2 class="text-imdb-blue">{{ movie.title }}</h2>
+      <RouterLink
+        :to="
+          movie.movie_type === 'movie'
+            ? '/movie/' + movie.movieId
+            : '/tv/' + movie.movieId
+        "
+      >
+        <h2 class="text-imdb-blue">{{ movie.title }}</h2>
+      </RouterLink>
       <p class="text-xs text-imdb-gray-text">
         {{ movie.release_date }} |
         {{ movie.movie_type === "movie" ? "Movie" : "TV Series" }}
