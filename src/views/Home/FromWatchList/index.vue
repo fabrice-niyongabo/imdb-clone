@@ -1,9 +1,28 @@
 <template>
   <section class="bg-black py-5" ref="section">
     <div class="container mx-auto">
-      <section-title title="From your Watchlist" href="#" class="my-10" />
-      <IMDBLoader v-if="isLoading" />
-      <NotLoggedIn />
+      <section-title
+        title="From your Watchlist"
+        href="/watchlist"
+        class="my-10"
+      />
+      <IMDBLoader
+        v-if="watchlistStore.isLoading && watchlistStore.watchlist.length === 0"
+      />
+      <NotLoggedIn v-if="userStore.token.trim() === ''" />
+      <div
+        v-if="
+          !watchlistStore.isLoading && watchlistStore.watchlist.length === 0
+        "
+        class="flex items-center justify-center flex-col gap-2 text-imdb-gray-text"
+      >
+        <v-icon icon="mdi-flask-empty-off-outline" />
+        <p>Your watchlist is empty!</p>
+      </div>
+      <Carausel
+        :movies="watchlistStore.watchlist"
+        v-if="!watchlistStore.isLoading && watchlistStore.watchlist.length > 0"
+      />
     </div>
   </section>
 </template>
@@ -13,12 +32,18 @@ import { defineComponent } from "vue";
 import SectionTitle from "../../../components/SectionTitle/index.vue";
 import IMDBLoader from "../../../components/IMDBLoader/index.vue";
 import NotLoggedIn from "./NotLoggedIn/index.vue";
-import type { ITopPickMovie } from "../../../interfaces";
+import type { ITopPickMovie, IUserStore } from "../../../interfaces";
+import { useUserStore } from "@/stores/user";
+import { useWatchlistStore } from "@/stores/watchlist";
+import type { IWachilstStore } from "@/stores/watchlist";
+import { useElementVisibility } from "@vueuse/core";
+import Carausel from "./Caraousel/index.vue";
 
 interface IReturnData {
   isVisible: any;
   movies: ITopPickMovie[];
-  isLoading: boolean;
+  userStore: IUserStore;
+  watchlistStore: IWachilstStore;
 }
 
 export default defineComponent({
@@ -26,13 +51,26 @@ export default defineComponent({
     SectionTitle,
     IMDBLoader,
     NotLoggedIn,
+    Carausel,
   },
   data(): IReturnData {
     return {
-      isLoading: false,
       isVisible: false,
       movies: [],
+      userStore: useUserStore(),
+      watchlistStore: useWatchlistStore(),
     };
+  },
+  mounted() {
+    this.isVisible = useElementVisibility(this.$refs.section as any);
+  },
+  watch: {
+    isVisible() {
+      if (this.isVisible) {
+        const store = useWatchlistStore();
+        store.fetchWatchList();
+      }
+    },
   },
 });
 </script>

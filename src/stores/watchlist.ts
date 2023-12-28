@@ -7,7 +7,7 @@ import { errorHandler } from "@/utils";
 
 type TDisplayMode = "Grid" | "List";
 
-interface IWachilstStore {
+export interface IWachilstStore {
   isLoading: boolean;
   watchlist: IWatchlist[];
   displayMode: TDisplayMode;
