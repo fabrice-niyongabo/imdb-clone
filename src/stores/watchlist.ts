@@ -34,7 +34,7 @@ export const useWatchlistStore = defineStore("watchlist", {
       );
     },
     resetWatchlist() {
-      this.$state.watchlist = [];
+      this.$state = { ...initialState };
     },
     fetchWatchList() {
       const userStore = useUserStore();

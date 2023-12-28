@@ -70,8 +70,10 @@ import { useRouter } from "vue-router";
 import { useUserStore } from "../../../stores/user";
 
 import Confirmation from "../../Confirmation/index.vue";
+import { useWatchlistStore } from "@/stores/watchlist";
 //user store
 const userStore = useUserStore();
+const watchlistStore = useWatchlistStore();
 const router = useRouter();
 
 //state
@@ -87,6 +89,7 @@ const handleMenuClick = () => {
 };
 
 const handleSignout = () => {
+  watchlistStore.resetWatchlist();
   userStore.resetUser();
   router.replace("/login");
 };

@@ -10,19 +10,18 @@
         v-if="watchlistStore.isLoading && watchlistStore.watchlist.length === 0"
       />
       <NotLoggedIn v-if="userStore.token.trim() === ''" />
-      <div
-        v-if="
-          !watchlistStore.isLoading && watchlistStore.watchlist.length === 0
-        "
-        class="flex items-center justify-center flex-col gap-2 text-imdb-gray-text"
-      >
-        <v-icon icon="mdi-flask-empty-off-outline" />
-        <p>Your watchlist is empty!</p>
+      <div v-else>
+        <div
+          v-if="
+            !watchlistStore.isLoading && watchlistStore.watchlist.length === 0
+          "
+          class="flex items-center justify-center flex-col gap-2 text-imdb-gray-text"
+        >
+          <v-icon icon="mdi-flask-empty-off-outline" />
+          <p>Your watchlist is empty!</p>
+        </div>
+        <Carausel :movies="watchlistStore.watchlist" v-else />
       </div>
-      <Carausel
-        :movies="watchlistStore.watchlist"
-        v-if="!watchlistStore.isLoading && userStore.token.trim().length > 0"
-      />
     </div>
   </section>
 </template>
