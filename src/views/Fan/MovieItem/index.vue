@@ -20,6 +20,8 @@
       <h3 class="line-clamp-1" :title="movie.name">{{ movie.title }}</h3>
       <div class="my-3">
         <v-btn
+          @click="handleAddToWatchlist"
+          :loading="isLoading"
           variant="text"
           class="w-full !p-0 !normal-case !text-imdb-blue !bg-imdb-light-black"
         >
@@ -41,6 +43,8 @@
         hover-bg="#121212d5"
         height="40px"
         width="30px"
+        :is-loading="isLoading"
+        :call-back-fn="handleAddToWatchlist"
       />
     </div>
   </div>
@@ -48,10 +52,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import type { PropType } from "vue";
-import type { ITopPickMovie } from "../../../interfaces";
+import type { ITopPickMovie, IWatchlistRequest } from "../../../interfaces";
 import { IMDB_BASE_IMAGE_PATH } from "../../../constants";
 import SectionTitle from "../../../components/SectionTitle/index.vue";
 import IMDBBookmarkIcon from "../../../components/IMDBBookmarkIcon/index.vue";
+import { addToWatchlist } from "@/utils";
 export default defineComponent({
   props: {
     movie: { type: Object as PropType<ITopPickMovie>, required: true },
@@ -60,12 +65,24 @@ export default defineComponent({
   data() {
     return {
       IMDB_BASE_IMAGE_PATH,
-      showModal: false,
+      isLoading: false,
     };
   },
   methods: {
-    toggleModal() {
-      this.showModal = !this.showModal;
+    setIsLoading(trueOrFalse: boolean) {
+      this.isLoading = trueOrFalse;
+    },
+    handleAddToWatchlist() {
+      const movieRequest: IWatchlistRequest = {
+        backdrop_path: this.movie.backdrop_path,
+        movie_type: "movie",
+        movieId: this.movie.id,
+        overview: this.movie.overview,
+        poster_path: this.movie.poster_path,
+        release_date: this.movie.first_air_date,
+        title: this.movie.title,
+      };
+      addToWatchlist(this.setIsLoading, movieRequest);
     },
   },
 });

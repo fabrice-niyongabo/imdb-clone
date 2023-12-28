@@ -2,7 +2,7 @@
   <div class="bg-imdb-black">
     <img
       :src="IMDB_BASE_IMAGE_PATH + movie.backdrop_path"
-      :alt="movie.name"
+      :alt="movie.title"
       class="h-[240px] w-full"
     />
     <div class="p-3 flex items-start justify-between gap-2">
@@ -11,6 +11,8 @@
         hover-bg="#000"
         height="40px"
         width="30px"
+        :is-loading="isLoading"
+        :call-back-fn="handleAddToWatchlist"
       />
       <div class="flex-1">
         <p>
@@ -21,7 +23,7 @@
           }}
           {{ new Date(movie.release_date).getDay() }}
         </p>
-        <h3 class="line-clamp-1" :title="movie.name">{{ movie.title }}</h3>
+        <h3 class="line-clamp-1" :title="movie.title">{{ movie.title }}</h3>
       </div>
     </div>
   </div>
@@ -29,10 +31,14 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import type { PropType } from "vue";
-import type { IUpcomingMovies } from "../../../../../interfaces";
+import type {
+  IUpcomingMovies,
+  IWatchlistRequest,
+} from "../../../../../interfaces";
 import { IMDB_BASE_IMAGE_PATH } from "../../../../../constants";
 import SectionTitle from "../../../../../components/SectionTitle/index.vue";
 import IMDBBookmarkIcon from "../../../../../components/IMDBBookmarkIcon/index.vue";
+import { addToWatchlist } from "@/utils";
 export default defineComponent({
   props: {
     movie: { type: Object as PropType<IUpcomingMovies>, required: true },
@@ -41,12 +47,24 @@ export default defineComponent({
   data() {
     return {
       IMDB_BASE_IMAGE_PATH,
-      showModal: false,
+      isLoading: false,
     };
   },
   methods: {
-    toggleModal() {
-      this.showModal = !this.showModal;
+    setIsLoading(trueOrFalse: boolean) {
+      this.isLoading = trueOrFalse;
+    },
+    handleAddToWatchlist() {
+      const movieRequest: IWatchlistRequest = {
+        backdrop_path: this.movie.backdrop_path,
+        movie_type: "movie",
+        movieId: this.movie.id,
+        overview: this.movie.overview,
+        poster_path: this.movie.poster_path,
+        release_date: this.movie.first_air_date,
+        title: this.movie.title,
+      };
+      addToWatchlist(this.setIsLoading, movieRequest);
     },
   },
 });

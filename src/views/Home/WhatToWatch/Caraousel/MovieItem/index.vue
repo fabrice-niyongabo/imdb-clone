@@ -21,7 +21,7 @@
       <div class="my-3">
         <v-btn
           :loading="isLoading"
-          @click="addToWatchlist"
+          @click="handleAddToWatchlist"
           variant="text"
           class="w-full !p-0 !normal-case !text-imdb-blue !bg-imdb-light-black"
         >
@@ -54,6 +54,8 @@
         hover-bg="#121212d5"
         height="40px"
         width="30px"
+        :is-loading="isLoading"
+        :call-back-fn="handleAddToWatchlist"
       />
     </div>
   </div>
@@ -104,6 +106,8 @@
         <div class="flex items-center justify-between mt-5 mb-2 gap-2">
           <div class="flex-1">
             <v-btn
+              @click="handleAddToWatchlist"
+              :loading="isLoading"
               :elevation="0"
               class="w-full !bg-imdb-light-blue-bg !normal-case !text-imdb-blue"
             >
@@ -125,23 +129,19 @@
 <script lang="ts" setup>
 import { defineProps, ref } from "vue";
 import type { PropType } from "vue";
-import type { ITopPickMovie, IWatchlist } from "../../../../../interfaces";
-import { BACKEND_URL, IMDB_BASE_IMAGE_PATH } from "../../../../../constants";
+import type {
+  ITopPickMovie,
+  IWatchlistRequest,
+} from "../../../../../interfaces";
+import { IMDB_BASE_IMAGE_PATH } from "../../../../../constants";
 import SectionTitle from "../../../../../components/SectionTitle/index.vue";
 import IMDBBookmarkIcon from "../../../../../components/IMDBBookmarkIcon/index.vue";
-import axios from "axios";
-import { useUserStore } from "@/stores/user";
-import { useWatchlistStore } from "@/stores/watchlist";
-import { errorHandler } from "@/utils";
-import { toastMessage } from "../../../../../utils";
+
+import { addToWatchlist } from "@/utils";
 
 const props = defineProps({
   movie: { type: Object as PropType<ITopPickMovie>, required: true },
 });
-
-//store
-const userStore = useUserStore();
-const watchlistStore = useWatchlistStore();
 
 //state
 const showModal = ref(false);
@@ -151,33 +151,20 @@ const toggleModal = () => {
   showModal.value = !showModal.value;
 };
 
-const addToWatchlist = () => {
-  isLoading.value = true;
-  const movieRequest: IWatchlist = {
-    id: 0,
-    movieId: props.movie.id,
+const setIsLoading = (trueOrFalse: boolean) => {
+  isLoading.value = trueOrFalse;
+};
+
+const handleAddToWatchlist = () => {
+  const movieRequest: IWatchlistRequest = {
     backdrop_path: props.movie.backdrop_path,
     movie_type: "tv",
+    movieId: props.movie.id,
     overview: props.movie.overview,
     poster_path: props.movie.poster_path,
     release_date: props.movie.first_air_date,
     title: props.movie.name,
-    userId: 0,
   };
-  axios
-    .post(BACKEND_URL + "/watchlist", movieRequest, {
-      headers: {
-        Authorization: `Bearer ${userStore.token}`,
-      },
-    })
-    .then((res) => {
-      isLoading.value = false;
-      watchlistStore.addToWatchList(res.data);
-      toastMessage("success", "Movie added to your watchlist!");
-    })
-    .catch((error) => {
-      isLoading.value = false;
-      errorHandler(error);
-    });
+  addToWatchlist(setIsLoading, movieRequest);
 };
 </script>

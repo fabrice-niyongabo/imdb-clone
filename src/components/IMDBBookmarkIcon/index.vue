@@ -21,11 +21,18 @@
     width:${width}`"
     @mouseover="onMouseOver()"
     @mouseout="onMouseOut()"
+    @click="!isLoading ? callBackFn() : null"
   >
     <div
       class="absolute top-0 bottom-0 left-0 right-0 pb-2 flex items-center justify-center"
     >
-      <v-icon icon="mdi-plus" size="small" />
+      <v-icon
+        icon="mdi-dots-circle"
+        size="small"
+        class="text-white rotate-icon"
+        v-if="isLoading"
+      />
+      <v-icon icon="mdi-plus" size="small" v-else />
     </div>
   </div>
 </template>
@@ -37,6 +44,8 @@ export default defineComponent({
     height: { type: String, required: true },
     bgColor: { type: String, required: true },
     hoverBg: { type: String },
+    isLoading: { type: Boolean, required: true },
+    callBackFn: { type: null, required: true },
   },
   data() {
     return {
@@ -53,3 +62,17 @@ export default defineComponent({
   },
 });
 </script>
+<style>
+.rotate-icon {
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>

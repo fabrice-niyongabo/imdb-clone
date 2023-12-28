@@ -1,6 +1,7 @@
 import { BACKEND_URL } from "@/constants";
-import type { TToastType } from "@/interfaces";
+import type { IWatchlistRequest, TToastType } from "@/interfaces";
 import { useUserStore } from "@/stores/user";
+import { useWatchlistStore } from "@/stores/watchlist";
 import axios, { AxiosError } from "axios";
 import { useToast } from "vue-toast-notification";
 
@@ -80,4 +81,27 @@ export const errorHandler = (error: unknown) => {
   } else {
     toastMessage("error", "Error: something went wrong");
   }
+};
+
+export const addToWatchlist = (setIsLoading: any, movie: IWatchlistRequest) => {
+  setIsLoading(true);
+
+  const userStore = useUserStore();
+  const watchlistStore = useWatchlistStore();
+
+  axios
+    .post(BACKEND_URL + "/watchlist", movie, {
+      headers: {
+        Authorization: `Bearer ${userStore.token}`,
+      },
+    })
+    .then((res) => {
+      setIsLoading(false);
+      watchlistStore.addToWatchList(res.data);
+      toastMessage("success", "Movie added to your watchlist!");
+    })
+    .catch((error) => {
+      setIsLoading(false);
+      errorHandler(error);
+    });
 };

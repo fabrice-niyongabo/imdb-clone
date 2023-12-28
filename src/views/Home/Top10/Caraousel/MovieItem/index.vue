@@ -20,6 +20,8 @@
       <h3 class="line-clamp-1" :title="movie.title">{{ movie.title }}</h3>
       <div class="my-3">
         <v-btn
+          @click="handleAddToWatchlist"
+          :loading="isLoading"
           variant="text"
           class="w-full !p-0 !normal-case !text-imdb-blue !bg-imdb-light-black"
         >
@@ -28,12 +30,14 @@
         </v-btn>
       </div>
 
-      <v-btn size="small" variant="text" class="!p-0 !normal-case w-full">
-        <div class="px-[5px]">
-          <v-icon icon="mdi-play" />
-          <span>Trailer</span>
-        </div>
-      </v-btn>
+      <RouterLink :to="'/movie/' + movie.id">
+        <v-btn size="small" variant="text" class="!p-0 !normal-case w-full">
+          <div class="px-[5px]">
+            <v-icon icon="mdi-play" />
+            <span>Trailer</span>
+          </div>
+        </v-btn>
+      </RouterLink>
     </div>
     <div class="absolute top-0 left-0 z-[1]">
       <IMDBBookmarkIcon
@@ -41,6 +45,8 @@
         hover-bg="#121212d5"
         height="40px"
         width="30px"
+        :call-back-fn="handleAddToWatchlist"
+        :is-loading="isLoading"
       />
     </div>
   </div>
@@ -48,9 +54,13 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import type { PropType } from "vue";
-import type { ITop10Movies } from "../../../../../interfaces";
+import type {
+  ITop10Movies,
+  IWatchlistRequest,
+} from "../../../../../interfaces";
 import { IMDB_BASE_IMAGE_PATH } from "../../../../../constants";
 import IMDBBookmarkIcon from "../../../../../components/IMDBBookmarkIcon/index.vue";
+import { addToWatchlist } from "@/utils";
 export default defineComponent({
   props: {
     movie: { type: Object as PropType<ITop10Movies>, required: true },
@@ -59,7 +69,25 @@ export default defineComponent({
   data() {
     return {
       IMDB_BASE_IMAGE_PATH,
+      isLoading: false,
     };
+  },
+  methods: {
+    setIsLaoding(trueOrFalse: boolean) {
+      this.isLoading = trueOrFalse;
+    },
+    handleAddToWatchlist() {
+      const movieRequest: IWatchlistRequest = {
+        backdrop_path: this.movie.backdrop_path,
+        movie_type: "movie",
+        movieId: this.movie.id,
+        overview: this.movie.overview,
+        poster_path: this.movie.poster_path,
+        release_date: this.movie.release_date,
+        title: this.movie.title,
+      };
+      addToWatchlist(this.setIsLaoding, movieRequest);
+    },
   },
 });
 </script>

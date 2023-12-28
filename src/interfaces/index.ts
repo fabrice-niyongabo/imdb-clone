@@ -259,3 +259,13 @@ export interface IWatchlist {
   release_date: string;
   overview: string;
 }
+
+export interface IWatchlistRequest {
+  movieId: number;
+  title: string;
+  backdrop_path: string;
+  poster_path: string;
+  movie_type: "movie" | "tv";
+  release_date: string;
+  overview: string;
+}
