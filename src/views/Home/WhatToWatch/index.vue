@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-black py-5 min-h-[50vh]" ref="section">
+  <section class="bg-black py-5 pt-10 min-h-[50vh]" ref="section">
     <div class="container mx-auto">
       <div class="flex items-start justify-between">
         <h1 class="capitalize text-imdb-gold text-2xl font-bold">
