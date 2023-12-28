@@ -1,10 +1,15 @@
 <template>
   <footer class="bg-black pb-5 pt-2">
     <div class="container mx-auto">
-      <div class="flex items-center justify-center">
-        <v-btn class="!bg-imdb-gold !normal-case" :elevation="0"
-          >Sign in for more access</v-btn
-        >
+      <div
+        class="flex items-center justify-center"
+        v-if="userStore.token.trim().length === 0"
+      >
+        <RouterLink to="/login">
+          <v-btn class="!bg-imdb-gold !normal-case" :elevation="0"
+            >Sign in for more access</v-btn
+          >
+        </RouterLink>
       </div>
       <div class="mt-10 flex items-center justify-center">
         <ul class="m-0 p-0 flex gap-5 md:gap-10">
@@ -28,6 +33,8 @@
     </p>
   </footer>
 </template>
-<script lang="ts">
-export default {};
+<script lang="ts" setup>
+import { useUserStore } from "@/stores/user";
+import { RouterLink } from "vue-router";
+const userStore = useUserStore();
 </script>
