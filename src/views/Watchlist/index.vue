@@ -47,7 +47,7 @@
               <v-icon
                 icon="mdi-grid"
                 title="Grid view"
-                v-if="displayMode == 'List'"
+                v-if="watchlistStore.displayMode == 'List'"
               />
               <v-icon icon="mdi-view-list" title="List view" v-else />
             </div>
@@ -58,20 +58,20 @@
         <div
           v-if="!watchlistStore.isLoading"
           :class="
-            displayMode === 'Grid'
+            watchlistStore.displayMode === 'Grid'
               ? 'grid grid-cols-2 md:grid-cols-6 gap-3'
               : ''
           "
         >
           <ListMovieItem
-            v-if="displayMode === 'List'"
+            v-if="watchlistStore.displayMode === 'List'"
             v-for="movie in watchlistStore.watchlist"
             :key="movie.id"
             class="mb-3"
             :movie="movie"
           />
           <GridMovieItem
-            v-if="displayMode === 'Grid'"
+            v-if="watchlistStore.displayMode === 'Grid'"
             v-for="movie in watchlistStore.watchlist"
             :key="movie.id"
             class="mb-3"
@@ -92,7 +92,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 import { useWatchlistStore } from "../../stores/watchlist";
 import Loader from "./Loader/index.vue";
 import ListMovieItem from "./ListMovieItem/index.vue";
@@ -100,11 +100,9 @@ import GridMovieItem from "./GridMovieItem/index.vue";
 
 const watchlistStore = useWatchlistStore();
 
-//state
-const displayMode = ref<"Grid" | "List">("List");
-
 const handleChangeDisplayMode = () => {
-  displayMode.value = displayMode.value === "Grid" ? "List" : "Grid";
+  const mode = watchlistStore.displayMode === "Grid" ? "List" : "Grid";
+  watchlistStore.setDispayMode(mode);
 };
 
 onMounted(() => {

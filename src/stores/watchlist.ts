@@ -5,19 +5,26 @@ import { defineStore } from "pinia";
 import { useUserStore } from "./user";
 import { errorHandler } from "@/utils";
 
+type TDisplayMode = "Grid" | "List";
+
 interface IWachilstStore {
   isLoading: boolean;
   watchlist: IWatchlist[];
+  displayMode: TDisplayMode;
 }
 
 const initialState: IWachilstStore = {
   watchlist: [],
   isLoading: false,
+  displayMode: "List",
 };
 
 export const useWatchlistStore = defineStore("watchlist", {
   state: (): IWachilstStore => ({ ...initialState }),
   actions: {
+    setDispayMode(mode: TDisplayMode) {
+      this.$state.displayMode = mode;
+    },
     addToWatchList(watchlist: IWatchlist) {
       this.$state.watchlist.push(watchlist);
     },
