@@ -21,6 +21,11 @@ export const useWatchlistStore = defineStore("watchlist", {
     addToWatchList(watchlist: IWatchlist) {
       this.$state.watchlist.push(watchlist);
     },
+    removeFromWatchList(movieId: number) {
+      this.$state.watchlist = this.$state.watchlist.filter(
+        (movie) => movie.movieId !== movieId
+      );
+    },
     fetchWatchList() {
       const userStore = useUserStore();
       this.$state.isLoading = true;

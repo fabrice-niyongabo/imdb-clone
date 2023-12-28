@@ -49,7 +49,12 @@
       </div>
       <div class="bg-white p-5">
         <div v-if="!watchlistStore.isLoading">
-          <div></div>
+          <ListMovieItem
+            v-for="movie in watchlistStore.watchlist"
+            :key="movie.id"
+            class="mb-3"
+            :movie="movie"
+          />
         </div>
         <Loader v-if="watchlistStore.isLoading" />
         <p
@@ -65,11 +70,15 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useWatchlistStore } from "../../stores/watchlist";
 import Loader from "./Loader/index.vue";
+import ListMovieItem from "./ListMovieItem/index.vue";
 
 const watchlistStore = useWatchlistStore();
+
+//state
+const diplayMode = ref<"Grid" | "List">("Grid");
 
 onMounted(() => {
   watchlistStore.fetchWatchList();
