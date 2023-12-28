@@ -33,6 +33,9 @@ export const useWatchlistStore = defineStore("watchlist", {
         (movie) => movie.movieId !== movieId
       );
     },
+    resetWatchlist() {
+      this.$state.watchlist = [];
+    },
     fetchWatchList() {
       const userStore = useUserStore();
       this.$state.isLoading = true;
