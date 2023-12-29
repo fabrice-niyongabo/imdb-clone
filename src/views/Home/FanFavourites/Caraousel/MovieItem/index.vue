@@ -47,7 +47,7 @@
         width="30px"
         :is-loading="isLoading"
         :add-to-watchlist="handleAddToWatchlist"
-        :remove-from-wach-list="handleRemoveWatchlist"
+        :remove-from-wach-list="handleRemoveFromWatchlist"
         :is-favourite="isMovieInWatchlist(movie.id)"
       />
     </div>
