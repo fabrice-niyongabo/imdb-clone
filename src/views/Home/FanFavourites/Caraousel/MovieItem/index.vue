@@ -46,7 +46,9 @@
         height="40px"
         width="30px"
         :is-loading="isLoading"
-        :call-back-fn="handleAddToWatchlist"
+        :add-to-watchlist="handleAddToWatchlist"
+        :remove-from-wach-list="handleRemoveWatchlist"
+        :is-favourite="isMovieInWatchlist(movie.id)"
       />
     </div>
   </div>
@@ -69,12 +71,19 @@ export default defineComponent({
   },
   components: { SectionTitle, IMDBBookmarkIcon },
   data() {
-    const { isLoading, addToWatchlist } = useWatchlist();
+    const {
+      isLoading,
+      addToWatchlist,
+      removeFromWachList,
+      isMovieInWatchlist,
+    } = useWatchlist();
     return {
       IMDB_BASE_IMAGE_PATH,
       showModal: false,
       isLoading,
       addToWatchlist,
+      removeFromWachList,
+      isMovieInWatchlist,
     };
   },
   methods: {
@@ -93,6 +102,9 @@ export default defineComponent({
         title: this.movie.title,
       };
       this.addToWatchlist(movieRequest);
+    },
+    handleRemoveFromWatchlist() {
+      this.removeFromWachList(this.movie.id);
     },
   },
 });

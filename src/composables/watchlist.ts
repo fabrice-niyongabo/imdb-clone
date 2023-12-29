@@ -28,9 +28,7 @@ export const useWatchlist = () => {
         toastMessage("success", "Movie added to your watchlist!");
       })
       .catch((error) => {
-        setTimeout(() => {
-          isLoading.value = false;
-        }, 1000);
+        isLoading.value = false;
         errorHandler(error);
       });
   };
@@ -54,5 +52,12 @@ export const useWatchlist = () => {
       });
   };
 
-  return { addToWatchlist, removeFromWachList, isLoading };
+  const isMovieInWatchlist = (movieId: number): boolean => {
+    const exists = watchlistStore.watchlist.find(
+      (movie) => movie.movieId === movieId
+    );
+    return exists ? true : false;
+  };
+
+  return { addToWatchlist, removeFromWachList, isMovieInWatchlist, isLoading };
 };

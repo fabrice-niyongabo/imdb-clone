@@ -55,7 +55,9 @@
         height="40px"
         width="30px"
         :is-loading="isLoading"
-        :call-back-fn="handleAddToWatchlist"
+        :add-to-watchlist="handleAddToWatchlist"
+        :remove-from-wach-list="handleRemoveFromWatchlist"
+        :is-favourite="isMovieInWatchlist(movie.id)"
       />
     </div>
   </div>
@@ -146,7 +148,8 @@ const props = defineProps({
 const showModal = ref(false);
 
 //composables
-const { addToWatchlist, isLoading } = useWatchlist();
+const { addToWatchlist, removeFromWachList, isMovieInWatchlist, isLoading } =
+  useWatchlist();
 
 const toggleModal = () => {
   showModal.value = !showModal.value;
@@ -163,5 +166,8 @@ const handleAddToWatchlist = () => {
     title: props.movie.name,
   };
   addToWatchlist(movieRequest);
+};
+const handleRemoveFromWatchlist = () => {
+  removeFromWachList(props.movie.id);
 };
 </script>

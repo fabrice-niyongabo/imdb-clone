@@ -15,14 +15,15 @@
         />
       </RouterLink>
       <div class="absolute top-0 left-0 z-[1]">
-        <IMDBBookmarkedIcon
-          bg-color="#94c34d"
-          hover-bg="#b1e967"
+        <IMDBBookmarkIcon
+          bg-color="#121212b4"
+          hover-bg="#121212d5"
           height="40px"
           width="30px"
-          title="Click to remove from favourite"
           :is-loading="isLoading"
-          :call-back-fn="handleRemoveFromWatchlist"
+          :add-to-watchlist="null"
+          :remove-from-wach-list="handleRemoveFromWatchlist"
+          :is-favourite="true"
         />
       </div>
     </div>
@@ -49,7 +50,7 @@ import { defineProps } from "vue";
 import type { PropType } from "vue";
 import type { IWatchlist } from "../../../interfaces";
 import { IMDB_BASE_IMAGE_PATH } from "@/constants";
-import IMDBBookmarkedIcon from "@/components/IMDBBookmarkedIcon/index.vue";
+import IMDBBookmarkIcon from "@/components/IMDBBookmarkIcon/index.vue";
 import { useWatchlist } from "@/composables/watchlist";
 
 const props = defineProps({
