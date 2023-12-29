@@ -22,7 +22,7 @@
           width="30px"
           title="Click to remove from favourite"
           :is-loading="isLoading"
-          :call-back-fn="removeFromWachList"
+          :call-back-fn="handleRemoveFromWatchlist"
         />
       </div>
     </div>
@@ -45,42 +45,20 @@
   </div>
 </template>
 <script setup lang="ts">
-import { defineProps, ref } from "vue";
+import { defineProps } from "vue";
 import type { PropType } from "vue";
 import type { IWatchlist } from "../../../interfaces";
-import { BACKEND_URL, IMDB_BASE_IMAGE_PATH } from "@/constants";
+import { IMDB_BASE_IMAGE_PATH } from "@/constants";
 import IMDBBookmarkedIcon from "@/components/IMDBBookmarkedIcon/index.vue";
-import axios from "axios";
-import { useUserStore } from "@/stores/user";
-import { useWatchlistStore } from "@/stores/watchlist";
-import { errorHandler, toastMessage } from "@/utils";
+import { useWatchlist } from "@/composables/watchlist";
 
 const props = defineProps({
   movie: { type: Object as PropType<IWatchlist>, required: true },
 });
 
-const userStore = useUserStore();
-const watchlistStore = useWatchlistStore();
+const { isLoading, removeFromWachList } = useWatchlist();
 
-//state
-const isLoading = ref(false);
-
-const removeFromWachList = () => {
-  isLoading.value = true;
-  axios
-    .delete(BACKEND_URL + "/watchlist/" + props.movie.movieId, {
-      headers: {
-        Authorization: `Bearer ${userStore.token}`,
-      },
-    })
-    .then((res) => {
-      isLoading.value = false;
-      watchlistStore.removeFromWatchList(props.movie.movieId);
-      toastMessage("success", res.data.message);
-    })
-    .catch((error) => {
-      isLoading.value = false;
-      errorHandler(error);
-    });
+const handleRemoveFromWatchlist = () => {
+  removeFromWachList(props.movie.movieId);
 };
 </script>

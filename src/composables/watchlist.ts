@@ -35,5 +35,24 @@ export const useWatchlist = () => {
       });
   };
 
-  return { addToWatchlist, isLoading };
+  const removeFromWachList = (movieId: number) => {
+    isLoading.value = true;
+    axios
+      .delete(BACKEND_URL + "/watchlist/" + movieId, {
+        headers: {
+          Authorization: `Bearer ${userStore.token}`,
+        },
+      })
+      .then((res) => {
+        isLoading.value = false;
+        watchlistStore.removeFromWatchList(movieId);
+        toastMessage("success", res.data.message);
+      })
+      .catch((error) => {
+        isLoading.value = false;
+        errorHandler(error);
+      });
+  };
+
+  return { addToWatchlist, removeFromWachList, isLoading };
 };

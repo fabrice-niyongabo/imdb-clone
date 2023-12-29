@@ -38,7 +38,7 @@
         width="30px"
         title="Click to remove from favourite"
         :is-loading="isLoading"
-        :call-back-fn="removeFromWachList"
+        :call-back-fn="handleDeleteFromWatchlist"
       />
     </div>
   </div>
@@ -53,6 +53,7 @@ import axios from "axios";
 import { errorHandler, toastMessage } from "@/utils";
 import { useUserStore } from "@/stores/user";
 import { useWatchlistStore } from "@/stores/watchlist";
+import { useWatchlist } from "@/composables/watchlist";
 
 export default defineComponent({
   props: {
@@ -60,31 +61,18 @@ export default defineComponent({
   },
   components: { IMDBBookmarkedIcon },
   data() {
+    const { isLoading, removeFromWachList } = useWatchlist();
     return {
+      isLoading,
       IMDB_BASE_IMAGE_PATH,
-      isLoading: false,
       userStore: useUserStore(),
       watchlistStore: useWatchlistStore(),
+      removeFromWachList,
     };
   },
   methods: {
-    removeFromWachList() {
-      this.isLoading = true;
-      axios
-        .delete(BACKEND_URL + "/watchlist/" + this.movie.movieId, {
-          headers: {
-            Authorization: `Bearer ${this.userStore.token}`,
-          },
-        })
-        .then((res) => {
-          this.isLoading = false;
-          this.watchlistStore.removeFromWatchList(this.movie.movieId);
-          toastMessage("success", res.data.message);
-        })
-        .catch((error) => {
-          this.isLoading = false;
-          errorHandler(error);
-        });
+    handleDeleteFromWatchlist() {
+      this.removeFromWachList(this.movie.movieId);
     },
   },
 });
