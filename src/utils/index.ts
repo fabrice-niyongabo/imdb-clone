@@ -1,6 +1,7 @@
 import { BACKEND_URL } from "@/constants";
 import type { TToastType } from "@/interfaces";
 import { useUserStore } from "@/stores/user";
+import { useWatchlistStore } from "@/stores/watchlist";
 import axios, { AxiosError } from "axios";
 import { useToast } from "vue-toast-notification";
 
@@ -42,11 +43,13 @@ export const getNewRefreshToken = () => {
         });
       })
       .catch((error) => {
-        if (error instanceof AxiosError && error.response?.status === 401) {
+        if (error instanceof AxiosError && error.response?.status === 400) {
           const userStore = useUserStore();
+          const watchlistStore = useWatchlistStore();
           const currentPath = window.location.pathname.replace("/", "");
 
           userStore.resetUser();
+          watchlistStore.resetWatchlist();
           //go to login page
           window.location.replace("/login?redirect=" + currentPath);
         }
