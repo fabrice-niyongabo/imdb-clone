@@ -40,22 +40,18 @@ import type {
 import { IMDB_BASE_IMAGE_PATH } from "../../../../../constants";
 import SectionTitle from "../../../../../components/SectionTitle/index.vue";
 import IMDBBookmarkIcon from "../../../../../components/IMDBBookmarkIcon/index.vue";
-import { addToWatchlist } from "@/utils";
+import { useWatchlist } from "@/composables/watchlist";
+
 export default defineComponent({
   props: {
     movie: { type: Object as PropType<IUpcomingMovies>, required: true },
   },
   components: { SectionTitle, IMDBBookmarkIcon },
   data() {
-    return {
-      IMDB_BASE_IMAGE_PATH,
-      isLoading: false,
-    };
+    const { addToWatchlist, isLoading } = useWatchlist();
+    return { addToWatchlist, isLoading, IMDB_BASE_IMAGE_PATH };
   },
   methods: {
-    setIsLoading(trueOrFalse: boolean) {
-      this.isLoading = trueOrFalse;
-    },
     handleAddToWatchlist() {
       const movieRequest: IWatchlistRequest = {
         backdrop_path: this.movie.backdrop_path,
@@ -66,7 +62,7 @@ export default defineComponent({
         release_date: this.movie.first_air_date,
         title: this.movie.title,
       };
-      addToWatchlist(this.setIsLoading, movieRequest);
+      this.addToWatchlist(movieRequest);
     },
   },
 });

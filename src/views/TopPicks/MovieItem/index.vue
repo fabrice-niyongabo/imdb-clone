@@ -131,17 +131,20 @@ import type { ITopPickMovie, IWatchlistRequest } from "../../../interfaces";
 import { IMDB_BASE_IMAGE_PATH } from "../../../constants";
 import SectionTitle from "../../../components/SectionTitle/index.vue";
 import IMDBBookmarkIcon from "../../../components/IMDBBookmarkIcon/index.vue";
-import { addToWatchlist } from "@/utils";
+import { useWatchlist } from "@/composables/watchlist";
+
 export default defineComponent({
   props: {
     movie: { type: Object as PropType<ITopPickMovie>, required: true },
   },
   components: { SectionTitle, IMDBBookmarkIcon },
   data() {
+    const { isLoading, addToWatchlist } = useWatchlist();
     return {
       IMDB_BASE_IMAGE_PATH,
       showModal: false,
-      isLoading: false,
+      addToWatchlist,
+      isLoading,
     };
   },
   methods: {
@@ -161,7 +164,7 @@ export default defineComponent({
         release_date: this.movie.first_air_date,
         title: this.movie.name,
       };
-      addToWatchlist(this.setIsLoading, movieRequest);
+      this.addToWatchlist(movieRequest);
     },
   },
 });

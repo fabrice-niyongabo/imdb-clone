@@ -136,8 +136,7 @@ import type {
 import { IMDB_BASE_IMAGE_PATH } from "../../../../../constants";
 import SectionTitle from "../../../../../components/SectionTitle/index.vue";
 import IMDBBookmarkIcon from "../../../../../components/IMDBBookmarkIcon/index.vue";
-
-import { addToWatchlist } from "@/utils";
+import { useWatchlist } from "@/composables/watchlist";
 
 const props = defineProps({
   movie: { type: Object as PropType<ITopPickMovie>, required: true },
@@ -145,14 +144,12 @@ const props = defineProps({
 
 //state
 const showModal = ref(false);
-const isLoading = ref(false);
+
+//composables
+const { addToWatchlist, isLoading } = useWatchlist();
 
 const toggleModal = () => {
   showModal.value = !showModal.value;
-};
-
-const setIsLoading = (trueOrFalse: boolean) => {
-  isLoading.value = trueOrFalse;
 };
 
 const handleAddToWatchlist = () => {
@@ -165,6 +162,6 @@ const handleAddToWatchlist = () => {
     release_date: props.movie.first_air_date,
     title: props.movie.name,
   };
-  addToWatchlist(setIsLoading, movieRequest);
+  addToWatchlist(movieRequest);
 };
 </script>

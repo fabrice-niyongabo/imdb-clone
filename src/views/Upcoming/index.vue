@@ -36,47 +36,16 @@
       <div v-for="date in dates" :key="date" class="my-5">
         <h3 class="text-xl font-semibold">{{ date }}</h3>
         <div class="border p-5 rounded-md mt-2">
-          <ul
-            class=""
-            v-for="result in results.filter(
-              (item) =>
-                item.release_date === date || item?.first_air_date === date
-            )"
-            :key="result.id"
-          >
-            <li class="flex items-center justify-between border-b py-1 gap-2">
-              <RouterLink
-                :to="
-                  type === 'movie' ? '/movie/' + result.id : '/tv/' + result.id
-                "
-              >
-                <img
-                  :src="IMDB_BASE_IMAGE_PATH + result.poster_path"
-                  width="50"
-                  height="100"
-                />
-              </RouterLink>
-              <div class="flex-1">
-                <RouterLink
-                  :to="
-                    type === 'movie'
-                      ? '/movie/' + result.id
-                      : '/tv/' + result.id
-                  "
-                >
-                  <p class="font-bold">{{ result.title }}</p>
-                  <p class="line-clamp-1 text-gray-400">
-                    {{ result.overview }}
-                  </p>
-                </RouterLink>
-              </div>
-              <IMDBBookmarkIcon
-                bg-color="#f2f2f2"
-                hover-bg="#CCC"
-                height="40px"
-                width="30px"
-              />
-            </li>
+          <ul>
+            <MovieItem
+              v-for="result in results.filter(
+                (item) =>
+                  item.release_date === date || item?.first_air_date === date
+              )"
+              :key="result.id"
+              :result="result"
+              :type="type === 'tv' ? 'tv' : 'movie'"
+            />
           </ul>
         </div>
       </div>
@@ -98,12 +67,12 @@
   </div>
 </template>
 <script lang="ts">
-import { API_TOKEN, IMDB_BASE_IMAGE_PATH } from "@/constants";
-import { IUpcomingMovies } from "@/interfaces";
-import IMDBBookmarkIcon from "@/components/IMDBBookmarkIcon/index.vue";
+import { API_TOKEN } from "@/constants";
+import type { IUpcomingMovies } from "@/interfaces";
 import IMDBBlackLoader from "@/components/IMDBBlackLoader/index.vue";
 import axios from "axios";
 import { defineComponent } from "vue";
+import MovieItem from "./MovieItem/index.vue";
 
 interface IReturnData {
   lang: string;
@@ -111,22 +80,20 @@ interface IReturnData {
   results: IUpcomingMovies[];
   isLoading: boolean;
   dates: string[];
-  IMDB_BASE_IMAGE_PATH: string;
   stopLoadingMore: boolean;
   isLoadingMore: boolean;
   page: number;
 }
 export default defineComponent({
   components: {
-    IMDBBookmarkIcon,
     IMDBBlackLoader,
+    MovieItem,
   },
   data(): IReturnData {
     return {
       page: 1,
       stopLoadingMore: false,
       isLoadingMore: false,
-      IMDB_BASE_IMAGE_PATH,
       lang: this.$route.query.lang
         ? (this.$route.query.lang as string)
         : "en-US",
