@@ -47,10 +47,9 @@
 import { defineComponent } from "vue";
 import type { PropType } from "vue";
 import type { IWatchlist } from "../../../../../interfaces";
-import { BACKEND_URL, IMDB_BASE_IMAGE_PATH } from "../../../../../constants";
+import { IMDB_BASE_IMAGE_PATH } from "../../../../../constants";
 import IMDBBookmarkedIcon from "../../../../../components/IMDBBookmarkedIcon/index.vue";
-import axios from "axios";
-import { errorHandler, toastMessage } from "@/utils";
+
 import { useUserStore } from "@/stores/user";
 import { useWatchlistStore } from "@/stores/watchlist";
 import { useWatchlist } from "@/composables/watchlist";
