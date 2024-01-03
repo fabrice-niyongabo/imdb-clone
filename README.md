@@ -1,40 +1,37 @@
-# imd-clone
+# imdb-clone
 
-This template should help get you started developing with Vue 3 in Vite.
+A Vue.js project created with Vite to replicate the functionality of IMDb. This project allows users to browse and search for movies, view details, and includes additional features such as user authentication, watchlist management, and account settings.
 
-## Recommended IDE Setup
+## Features
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- **Browse Movies:** Explore a collection of movies with **infinite scrolling**.
+- **Search:** Search for movies by title, genre, or any relevant criteria.
+- **Movie Details:** View detailed information about a specific movie.
+- **User Authentication:** Register and log in to manage your watchlist and account settings.
+- **Watchlist Management:** Add and remove movies from your personal watchlist.
+- **Account Settings:** Update your profile information and password.
+- **Responsive Design:** Ensure a seamless experience on various devices.
 
-## Type Support for `.vue` Imports in TS
+## Technologies Used
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+- Vue.js
+- Vite
+- Pinia (State Management)
+- TypeScript
+- Vuetify (Material Design Component Framework)
+- Tailwind CSS
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+## Getting Started
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+1. Clone the repository
+2. cd the project directory and then run ``npm install``
+3. Run the project by ``npm run dev``
 
-## Customize configuration
+## Contributing
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+1. Fork the project.
+2. Create your feature branch: `git checkout -b feature/new-feature`.
+3. Commit your changes: `git commit -m 'Add new feature'`.
+4. Push to the branch: `git push origin feature/new-feature`.
+5. Open a pull request.
 
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
