@@ -35,3 +35,5 @@ A Vue.js project created with Vite to replicate the functionality of IMDb. This 
 4. Push to the branch: `git push origin feature/new-feature`.
 5. Open a pull request.
 
+## Screenshoots
+![Screen shoot 1](https://github.com/fabrice-niyongabo/imdb-clone/blob/master/public/screenshoots/1.png)
