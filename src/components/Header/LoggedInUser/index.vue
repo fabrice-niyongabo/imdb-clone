@@ -7,7 +7,9 @@
   >
     <div class="flex items-center justify-center gap-1">
       <v-icon icon="mdi-account-circle" size="large" />
-      <span> {{ userStore.userDetails.names.split(" ")[0] }}</span>
+      <span class="hidden md:block">
+        {{ userStore.userDetails.names.split(" ")[0] }}</span
+      >
       <span>
         <v-icon v-if="showLanguages" icon="mdi-menu-up" size="x-large" />
         <v-icon v-if="!showLanguages" icon="mdi-menu-down" size="x-large" />

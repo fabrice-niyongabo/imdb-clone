@@ -1,6 +1,9 @@
 <template>
   <header class="bg-[#121212] shadow-md">
     <nav class="container mx-auto py-2 flex items-center justify-between gap-2">
+      <div class="md:hidden">
+        <MobileMenu />
+      </div>
       <router-link to="/">
         <svg
           id="home_img"
@@ -32,10 +35,12 @@
           </g>
         </svg>
       </router-link>
-      <Menu />
+      <div class="hidden md:block">
+        <Menu />
+      </div>
       <Search />
 
-      <div class="px-2">
+      <div class="px-2 hidden md:block">
         <svg
           class="ipc-logo navbar__imdbpro-menu-toggle__name"
           width="52"
@@ -69,21 +74,25 @@
           </g>
         </svg>
       </div>
-      <div class="w-[2px] h-full bg-[#383838] ml-2">&nbsp;</div>
-      <v-btn
-        elevation="0"
-        color="#121212"
-        class="hover:cursor-pointer hover:bg-[#252525] !capitalize"
-        prepend-icon="mdi-bookmark-plus"
-        @click="goToWatchlist"
-      >
-        <span>Watchlist</span>
-        <span
-          v-if="watchlistStore.watchlist.length > 0"
-          class="text-[10px] bg-imdb-gold rounded-md px-1 py-[2px] text-center ml-1"
-          >{{ watchlistStore.watchlist.length }}</span
-        ></v-btn
-      >
+      <div class="w-[2px] h-full bg-[#383838] ml-2 hidden md:visible">
+        &nbsp;
+      </div>
+      <div class="hidden md:block">
+        <v-btn
+          elevation="0"
+          color="#121212"
+          class="hover:cursor-pointer hover:bg-[#252525] !capitalize"
+          prepend-icon="mdi-bookmark-plus"
+          @click="goToWatchlist"
+        >
+          <span>Watchlist</span>
+          <span
+            v-if="watchlistStore.watchlist.length > 0"
+            class="text-[10px] bg-imdb-gold rounded-md px-1 py-[2px] text-center ml-1"
+            >{{ watchlistStore.watchlist.length }}</span
+          ></v-btn
+        >
+      </div>
       <RouterLink to="/login" v-if="userStore.token.trim() === ''">
         <v-btn
           elevation="0"
@@ -93,7 +102,9 @@
         >
       </RouterLink>
       <LoggedInUser v-else />
-      <Languages />
+      <div class="hidden md:block">
+        <Languages />
+      </div>
     </nav>
   </header>
 </template>
@@ -104,6 +115,7 @@ import Menu from "./Menu/Menu.vue";
 import Search from "./Search/Search.vue";
 import Languages from "./Languages/Languages.vue";
 import LoggedInUser from "./LoggedInUser/index.vue";
+import MobileMenu from "./MobileMenu/index.vue";
 import { useUserStore } from "@/stores/user";
 import { useWatchlistStore } from "@/stores/watchlist";
 
