@@ -40,3 +40,4 @@ A Vue.js project created with Vite to replicate the functionality of IMDb. This 
 
 ## Screenshoots
 ![Screen shoot 1](https://github.com/fabrice-niyongabo/imdb-clone/blob/master/public/screenshoots/1.png)
+![Screen shoot 2](https://github.com/fabrice-niyongabo/imdb-clone/blob/master/public/screenshoots/3.png)
