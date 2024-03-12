@@ -18,11 +18,7 @@
     >
   </div>
 </template>
-<script lang="ts">
-import { defineComponent } from "vue";
-import { RouterLink } from "vue-router";
+
+<script lang="ts" setup>
 import IMDBBookmarkIcon from "../../../../components/IMDBBookmarkIcon/index.vue";
-export default defineComponent({
-  components: { IMDBBookmarkIcon },
-});
 </script>

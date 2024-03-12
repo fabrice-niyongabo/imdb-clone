@@ -40,8 +40,12 @@
       !isLoading
         ? addToWatchlist || removeFromWachList
           ? !isFavourite
-            ? addToWatchlist()
-            : removeFromWachList()
+            ? addToWatchlist
+              ? addToWatchlist()
+              : null
+            : removeFromWachList
+            ? removeFromWachList()
+            : null
           : null
         : null
     "
@@ -71,10 +75,10 @@ defineProps({
   hoverBg: { type: String },
   favoriteBgColor: { type: String, default: "#94c34d" },
   favouriteHoverBg: { type: String, default: "#b1e967" },
-  isLoading: { type: Boolean, required: true },
-  addToWatchlist: { type: null, required: true },
-  removeFromWachList: { type: null, required: true },
-  isFavourite: { type: Boolean, required: true },
+  isLoading: { type: Boolean, default: false },
+  addToWatchlist: { type: null, default: undefined },
+  removeFromWachList: { type: null, default: undefined },
+  isFavourite: { type: Boolean, default: false },
 });
 
 //state
