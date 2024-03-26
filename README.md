@@ -11,6 +11,7 @@ A Vue.js project created with Vite to replicate the functionality of IMDb. This 
 - **Watchlist Management:** Add and remove movies from your personal watchlist.
 - **Account Settings:** Update your profile information and password.
 - **Responsive Design:** Ensure a seamless experience on various devices.
+- **Infinite scrolling**
 
 ## Technologies Used
 
